@@ -1,12 +1,74 @@
-<div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
-  <div
-    class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-    <div
-      class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
-      <div>
-        <h6
-          class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">
-          Trabajo práctico</h6>
+<div class="container mx-auto p-6">
+  <!-- Header -->
+  <div class="mb-6 text-center">
+    <h1 class="text-4xl font-bold text-blue-600">Panel de Administración de la Peluquería</h1>
+    <p class="text-gray-600 mt-2">Gestione sus turnos, clientes y servicios con facilidad.</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+    <!-- Administración de Turnos -->
+    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
+      <div class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
+        <div>
+          <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">Administración de Turnos</h6>
+        </div>
+      </div>
+      <div class="p-6">
+        <button class="btn btn-primary mb-4 mr-2">Añadir Turno</button>
+        <button class="btn btn-secondary mb-4 mr-2">Ver Turnos</button>
+        <button class="btn btn-warning mb-4 mr-2">Modificar Turno</button>
+      </div>
+    </div>
+
+    <!-- Resumen de Turnos -->
+    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden">
+      <div class="p-6">
+        <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-4">Resumen de Turnos</h6>
+        <ul class="list-group">
+          <li class="list-group-item flex justify-between items-center">
+            <span>Turnos de Hoy</span>
+            <span class="badge badge-primary badge-pill">12</span>
+          </li>
+          <li class="list-group-item flex justify-between items-center">
+            <span>Turnos Pendientes</span>
+            <span class="badge badge-secondary badge-pill">5</span>
+          </li>
+          <li class="list-group-item flex justify-between items-center">
+            <span>Turnos Completados</span>
+            <span class="badge badge-success badge-pill">30</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información adicional -->
+  <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+    <!-- Administración de Clientes -->
+    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden">
+      <div class="p-6">
+        <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-4">Administración de Clientes</h6>
+        <button class="btn btn-primary mb-4 mr-2">Añadir Cliente</button>
+        <button class="btn btn-secondary mb-4 mr-2">Ver Clientes</button>
+        <button class="btn btn-warning mb-4 mr-2">Modificar Cliente</button>
+      </div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
+      <div class="p-6">
+        <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-4">Estadísticas</h6>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 bg-blue-100 rounded-lg shadow">
+            <h6 class="text-lg font-semibold text-blue-600">Clientes Satisfechos</h6>
+            <p class="text-2xl font-bold">95%</p>
+          </div>
+          <div class="p-4 bg-green-100 rounded-lg shadow">
+            <h6 class="text-lg font-semibold text-green-600">Turnos Cancelados ultimo mes</h6>
+            <p class="text-2xl font-bold">5%</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
