@@ -1,0 +1,54 @@
+# Compiled output
+/dist
+/out-tsc
+
+# Dependencies
+/node_modules
+
+# Angular build specific files
+/angular
+.angular
+
+# IDEs and editors
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.code-workspace
+.vscode/
+
+# Miscellaneous
+/.history
+/.tmp
+/logs
+*.log
+*.swp
+*.bak
+*.tmp
+*.tmp.*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Compiled JavaScript files
+*.js
+*.js.map
+
+# Compiled TypeScript files
+*.tsbuildinfo
+
+# Service workers
+/ngsw-worker.js
+/ngsw.json
+/ngsw-manifest.json
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage di
