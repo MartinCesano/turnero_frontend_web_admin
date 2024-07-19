@@ -1,0 +1,78 @@
+<div class="container">
+  <form (ngSubmit)="saveProduct()" #form="ngForm">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="idInputCodigo">Code</label>
+        <input type="text" class="form-control" id="idInputCodigo" [value]="id" name="id" disabled>
+      </div>
+      <div class="col-md-6">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" placeholder="Ingrese el nombre" id="idInputName" [(ngModel)]="product.name" name="name" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="idInputPrice">Price</label>
+        <input type="number" class="form-control" min="0" id="idInputPrice" [(ngModel)]="product.price" placeholder="Ingrese el precio" name="price" required>
+      </div>
+      <div class="col-md-6">
+        <label for="idInputTalle">Size</label>
+        <input type="text" class="form-control" id="idInputTalle" [(ngModel)]="product.size" name="size" placeholder="Ingrese el tamaño" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="idInputColor">Color</label>
+        <input type="text" class="form-control" id="idInputColor" [(ngModel)]="product.color" name="color" placeholder="Ingrese el color" required>
+      </div>
+      <div class="col-md-6">
+        <label for="productTypeId">Product Type</label>
+        <select class="form-control" id="productTypeId" [(ngModel)]="product.productType" name="productTypeId" required>
+          <option *ngFor="let type of productTypes" [value]="type.id" [selected]="type.id === product.productType">{{ type.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-3 justify-content-center">
+      <div class="col-md-4 d-flex justify-content-between">
+        <button type="button" class="btn btn-danger" (click)="cancelarProduct()" data-bs-toggle="modal" data-bs-target="#cancelarProduct">Cancelar</button>
+        <!-- Deshabilita el botón si el formulario es inválido -->
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Guardar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!---modal de cancelacion-->
+<div class="modal fade" id="cancelarProduct" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModal">Notificaion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Se cancelo correctamente la operacion
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---modal de confirmacion-->
+<div class="modal fade" id="confirmProduct" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModal">Notificaion</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Se Confirmo correctamente el producto
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
