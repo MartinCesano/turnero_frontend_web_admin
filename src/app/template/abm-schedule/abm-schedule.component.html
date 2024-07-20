@@ -1,43 +1,47 @@
 <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h1 class='display-6 mb-3'>Horarios</h1> 
-        <button class="btn btn-primary">Crear Horario Manualmente</button>
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Horas</th>
-              </tr>
-            </thead>
-            <!-- Hay que crear un div que muestre los horarios de forma responsive, que se vayan mostrando uno abajo del otro  -->
-            <tbody class="table-group-divider">
-              <tr *ngFor="let schedule of schedules">
-                <td class="pt-3">{{ schedule.name }}</td>
-                <td *ngFor="let appointmentTime of schedule.appointmentTimes" class="pt-3">{{ appointmentTime.startTime }}</td>
-                <td><button class="bi bi-pencil btn btn-outline-success rounded mr-2"></button>
-                <button class="bi bi-trash btn btn-outline-danger rounded" type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" ></button></td>
-              </tr>
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="deleteModal">Eliminar Hora</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Are you sure you want to delete the product:?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button  type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class='display-6 mb-3'>Horarios</h1>
+      <button class="btn btn-primary mb-3">Crear Horario Manualmente</button>
+      <div class="row">
+        <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
+          <div class="card d-flex flex-column" style="width: 100%;">
+            <div class="card-body flex-grow-1">
+              <h5 class="card-title mb-3">{{ schedule.name }}</h5>
+              <div class="row mt-3">
+                <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="col-6 col-md-4 col-lg-3 mb-2">
+                  <span class="badge bg-secondary">{{ appointmentTime.startTime }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between p-2">
+              <button class="btn btn-outline-success flex-fill me-2">
+                <i class="bi bi-pencil"></i> Editar
+              </button>
+              <button class="btn btn-outline-danger flex-fill">
+                <i class="bi bi-trash"></i> Eliminar
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModal">Eliminar Hora</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete the product:?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
