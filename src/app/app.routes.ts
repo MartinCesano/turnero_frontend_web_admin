@@ -13,10 +13,6 @@ export const routes: Routes = [
         loadComponent: () => import('./template/home/home.component').then(m => m.HomeComponent)
       },
       {
-        path: 'list-products',
-        loadComponent: () => import('./template/products-abm/products-abm.component').then(m => m.ProductsABMComponent)
-      },
-      {
         path: 'form-products',
         loadComponent: () => import('./template/form-products/form-products.component').then(m => m.FormProductsComponent)
       }, 
@@ -27,6 +23,10 @@ export const routes: Routes = [
       {
         path: 'abm-schedule',
         loadComponent: () => import('./template/abm-schedule/abm-schedule.component').then(m => m.AbmScheduleComponent)
+      },
+      {
+        path: 'abm-workday',
+        loadComponent: () => import('./template/abm-workday/abm-workday.component').then(m => m.AbmWorkdayComponent)
       },
     ],
 
