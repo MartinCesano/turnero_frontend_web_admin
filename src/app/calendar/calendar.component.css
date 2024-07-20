@@ -1,0 +1,72 @@
+.calendar {
+    background-color: #191b1d;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  .calendar th, .calendar td {
+    text-align: center;
+    width: 40px; /* Ancho fijo */
+    height: 40px; /* Alto fijo, ajusta este valor según necesites */
+    padding: 0;
+
+  }
+  .calendar .header {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  .calendar .selected {
+    background-color: #007e69;
+    color: rgb(255, 255, 255);
+    border-radius: 10%;
+  }
+
+  .disabled {
+    background-color: #966161;
+    color: rgb(255, 255, 255);
+    border-radius: 10%;
+}
+
+  .disabledFutureDay {
+    background-color: #0b0b0bce;
+    color: rgb(255, 255, 255);
+    border-radius: 10%;
+  }
+
+button:hover {
+    background-color: #44444473;
+    border-radius: 10%;
+}
+
+  .calendar .nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+  }
+  .calendar .nav-button:focus {
+    outline: none;
+  }
+  
+
+  .button-none {
+    background: none; /* Elimina el fondo */
+    border: none; /* Elimina el borde */
+    padding: 0; /* Elimina el padding */
+    margin: 0; /* Elimina el margen */
+    font: inherit; /* Usa la fuente del elemento padre */
+    color: inherit; /* Usa el color de texto del elemento padre */
+    cursor: pointer; /* Mantiene el cursor como puntero para indicar que es clickeable */
+  }
+
+  .btn-calendar{
+    width: 100%; 
+    height: 100%; 
+    display: block;
+
+  }
+  table {
+    border-collapse: separate;
+    border-spacing: 2px 2px; /* 10px de espacio horizontal, 0px de espacio vertical */
+  }
