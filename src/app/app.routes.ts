@@ -3,7 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth-guard.service';
 
 export const routes: Routes = [
-  //{ path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: '',
     loadComponent: () => import('./shared/layout/layout.component').then(m => m.LayoutComponent),

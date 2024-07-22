@@ -131,5 +131,48 @@ export class ApiService {
       throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
     }
   }
+
+  async getAppointmentTimes(): Promise<any> {
+    try {
+      const response = await axios.get(`${this.url}/appointment-time`);
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      console.error('Error fetching appointment times:', error);
+      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+    }
+  }
+
+  async createAppointmentTime(appointmentTime: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.url}/appointment-time/`, appointmentTime);
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      console.error('Error creating appointment time:', error);
+      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+    }
+  }
+
+
+
+  async updateAppointmentTime(appointmentTime: any): Promise<any> {
+    try {
+      const response = await axios.put(`${this.url}/appointment-time/${appointmentTime.id}`, appointmentTime);
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      console.error('Error updating appointment time:', error);
+      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+    }
+  }
+
+  async deleteAppointmentTime(id: number): Promise<any> {
+    try {
+      const response = await axios.delete(`${this.url}/appointment-time/${id}`);
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      console.error('Error deleting appointment time:', error);
+      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+    }
+  }
 }
+
 
