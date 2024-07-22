@@ -1,1 +1,88 @@
-<app-calendar><app-calendar>
+<!-- Calendar HTML -->
+<div class="calendar text-center bg-dark">
+    <div class="d-flex justify-content-between align-items-center header">
+      <button (click)="previousMonth()" class="nav-button">&larr;</button>
+      <h2>{{ monthYear }}</h2>
+      <button (click)="nextMonth()" class="nav-button">&rarr;</button>
+    </div>
+    <table class="table table-dark table-borderless">
+      <thead>
+        <tr>
+          <th>Dom</th>
+          <th>Lun</th>
+          <th>Mar</th>
+          <th>Mie</th>
+          <th>Jue</th>
+          <th>Vie</th>
+          <th>Sab</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of weeks">
+          <td class="td" *ngFor="let workday of week" [class.selected]="canSelectDay(workday)"
+            [class.disabled]="isDisabledDay(workday)" [class.disabledFutureDay]="isBlockedFuruteDay(workday)">
+            <button class="button-none btn-calendar" type="button" data-bs-target="#abmWorkdayModal"
+              data-bs-toggle="modal" 
+              (click)="selectWorkday(workday); $event.preventDefault()">
+                {{ workday }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+<!-- Modal HTML -->
+<div class="modal fade" id="abmWorkdayModal" tabindex="-1" aria-labelledby="workdayModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="workdayModal">Horarios del Día</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedDayObject">
+          <p><strong>Fecha:</strong> {{ selectedDayDate }}</p>
+          <p><strong>Cerrado:</strong> {{ selectedDayObject.close ? 'Yes' : 'No' }}</p>
+          <div class="mt-3">
+            <div class="container">
+              <div class="col-lg-12 col-md-12 col-sm-12 mb-12 d-flex align-items-stretch">
+                <div class="card d-flex flex-column" style="width: 100%;">
+                    <div class="card-body flex-grow-1">
+                      <h5 class="card-title mb-3"><b>Turnos:</b></h5>
+                      <div class="row mt-3">
+                        <div *ngFor="let appointmentTime of appoinments" class="col-6 col-md-4 col-lg-3 mb-2">
+                          <span class="badge bg-secondary">{{ appointmentTime.startTime }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between p-2">
+                      <button class="btn btn-outline-success flex-fill me-2">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                      <button class="btn btn-outline-danger flex-fill">
+                        <i class="bi bi-trash"></i> Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <ul>
+              <li *ngFor="let appointment of selectedDayObject.appointment">
+                <!-- Ajusta según los atributos de Appointment -->
+                {{ appointment.startTime }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="!selectedDayObject">
+          <p>No data available.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

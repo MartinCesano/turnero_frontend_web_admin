@@ -6,9 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ApiService {
-  url = 'http://localhost:3001';
+  url = 'https://qngrq6tj-3000.brs.devtunnels.ms';
 
-  constructor() {}
+  constructor() { }
 
   // Método para obtener el token almacenado en el localStorage
   private getAccessToken(): string | null {
@@ -54,9 +54,9 @@ export class ApiService {
   async updateProductById(id: number, product: any): Promise<any> {
     try {
       axios.put(`${this.url}/products/${id}`, product)
-    .then((productById) => {
-      console.log(productById);
-    })
+        .then((productById) => {
+          console.log(productById);
+        })
     } catch (error) {
       throw new HttpErrorResponse({ error });
     }
@@ -65,10 +65,10 @@ export class ApiService {
   async createProduct(product: any): Promise<any> {
     try {
       axios.post(`${this.url}/products/`, product)
-    .then((product) => {
-      console.log(product);
-      return product;
-    })
+        .then((product) => {
+          console.log(product);
+          return product;
+        })
     } catch (error) {
       throw new HttpErrorResponse({ error });
     }
@@ -93,28 +93,43 @@ export class ApiService {
       throw new HttpErrorResponse({ error });
     }
   }
-  
+
   async getProductTypes(): Promise<any> {
     try {
-        const accessToken = this.getAccessToken();
-        console.log(accessToken);
-        if (!accessToken) {
-            throw new HttpErrorResponse({
-                error: 'No access token found',
-                status: 401,
-                statusText: 'Unauthorized'
-            });
+      const accessToken = this.getAccessToken();
+      console.log(accessToken);
+      if (!accessToken) {
+        throw new HttpErrorResponse({
+          error: 'No access token found',
+          status: 401,
+          statusText: 'Unauthorized'
+        });
+      }
+      return (await axios.get(`${this.url}/product-types/`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
         }
-        return (await axios.get(`${this.url}/product-types/`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        })).data;
+      })).data;
     } catch (error) {
-        throw new HttpErrorResponse({ error });
+      throw new HttpErrorResponse({ error });
     }
+  }
+
+  getWorkdays(): any {
+    return axios.get(`${this.url}/workday`);
+  }
+  getWorkdayByDate(date: string): any {
+    return axios.get(`${this.url}/workday/${date}`);
+  }
+
+  async getSchedules(): Promise<any> {
+    try {
+      const response = await axios.get(`${this.url}/schedule`);
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      console.error('Error fetching schedules:', error);
+      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+    }
+  }
 }
 
-
-
-}
