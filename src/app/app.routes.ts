@@ -24,6 +24,11 @@ export const routes: Routes = [
         path: 'abm-workday',
         loadComponent: () => import('./template/abm-workday/abm-workday.component').then(m => m.AbmWorkdayComponent)
       },
+      {
+        path: 'abm-customers',
+        loadComponent: () => import('./template/abm-customers/abm-customers.component').then(m => m.AbmCustomersComponent)
+      },
+
     ],
 
     //canActivate: [AuthGuardService],
