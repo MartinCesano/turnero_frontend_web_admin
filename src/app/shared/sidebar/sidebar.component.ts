@@ -9,23 +9,13 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements AfterViewInit {
+export class SidebarComponent {
   activeLink: string;
-  buttonSidebar: HTMLElement | null = null;
 
   constructor(private router: Router) {
     this.activeLink = this.router.url; // Inicialmente establecemos el enlace activo a la ruta actual
   }
 
-  ngAfterViewInit() {
-    this.buttonSidebar = document.getElementById('idBtnSidebar');
-    console.log(this.buttonSidebar);
-    if (this.buttonSidebar) {
-      this.buttonSidebar.addEventListener('click', this.activarSidebar.bind(this));
-    } else {
-      console.error("Botón con ID 'idBtnSidebar' no encontrado.");
-    }
-  }
 
   activarSidebar() {
     console.log("Activar sidebar");

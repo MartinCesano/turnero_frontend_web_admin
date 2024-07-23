@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ModalService } from '../../components/modals/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  url = 'https://qngrq6tj-3000.brs.devtunnels.ms';
+  //url = 'https://qngrq6tj-3000.brs.devtunnels.ms';
+  url = 'http://localhost:3000';
 
-  constructor() { }
+  constructor(private modalService: ModalService) {}
 
   // Método para obtener el token almacenado en el localStorage
   private getAccessToken(): string | null {
@@ -38,6 +40,7 @@ export class ApiService {
         }
       })).data;
     } catch (error) {
+      
       throw new HttpErrorResponse({ error });
     }
   }
@@ -116,10 +119,30 @@ export class ApiService {
   }
 
   getWorkdays(): any {
-    return axios.get(`${this.url}/workday`);
+    try{
+      return axios.get(`${this.url}/workday`);
+    }catch(error){
+      this.modalService.openMenssageTypes({
+                text:"Error en la obtencion de los dias.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+            throw new HttpErrorResponse({ error });
+    }
   }
   getWorkdayByDate(date: string): any {
-    return axios.get(`${this.url}/workday/${date}`);
+    try{
+      return axios.get(`${this.url}/workday/${date}`);
+    } catch(error){
+      this.modalService.openMenssageTypes({
+                text:"Error en la obtencion de las horas.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+            throw new HttpErrorResponse({ error });
+    }
   }
 
   async getSchedules(): Promise<any> {
@@ -127,8 +150,13 @@ export class ApiService {
       const response = await axios.get(`${this.url}/schedule`);
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
-      console.error('Error fetching schedules:', error);
-      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+      this.modalService.openMenssageTypes({
+                text:"Error en la obtencion de los horarios.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+            throw new HttpErrorResponse({ error });
     }
   }
 
@@ -137,8 +165,13 @@ export class ApiService {
       const response = await axios.get(`${this.url}/appointment-time`);
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
-      console.error('Error fetching appointment times:', error);
-      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+      this.modalService.openMenssageTypes({
+                text:"Error en la obtencion de las horas.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+      throw new HttpErrorResponse({ error });
     }
   }
 
@@ -147,8 +180,13 @@ export class ApiService {
       const response = await axios.post(`${this.url}/appointment-time/`, appointmentTime);
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
-      console.error('Error creating appointment time:', error);
-      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+      this.modalService.openMenssageTypes({
+                text:"Error al crear una hora.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+      throw new HttpErrorResponse({ error });
     }
   }
 
@@ -159,8 +197,13 @@ export class ApiService {
       const response = await axios.put(`${this.url}/appointment-time/${appointmentTime.id}`, appointmentTime);
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
-      console.error('Error updating appointment time:', error);
-      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+      this.modalService.openMenssageTypes({
+                text:"Error en actualizar una hora.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+            throw new HttpErrorResponse({ error });
     }
   }
 
@@ -169,8 +212,13 @@ export class ApiService {
       const response = await axios.delete(`${this.url}/appointment-time/${id}`);
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
-      console.error('Error deleting appointment time:', error);
-      throw error;  // Vuelve a lanzar el error para que pueda ser manejado en el componente
+      this.modalService.openMenssageTypes({
+                text:"Error borrar una hora.",
+                subtitle: (error as any).response.data.message,
+                url:null,
+                type:"error"
+            })
+            throw new HttpErrorResponse({ error });
     }
   }
 }

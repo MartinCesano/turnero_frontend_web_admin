@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/services/api.service';
+import { ModalService } from '../../components/modals/modal.service';
+
+
 
 @Component({
   selector: 'abm-appointment-time',
@@ -13,7 +16,7 @@ export class AbmAppointmentTimeComponent{
   appointmentTimes: any[] = [];
   selectedAppointment: any;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private modalService: ModalService) {}
 
   ngOnInit(): void {
     this.getAppointmentTimes();
