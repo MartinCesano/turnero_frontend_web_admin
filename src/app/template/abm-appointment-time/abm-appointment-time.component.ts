@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppointmentTimeService } from '../../core/services/appointment-time.service';
+
+//importaciones del modal
+
 import { ModalService } from '../../components/modals/modal.service';
+
 
 @Component({
   selector: 'abm-appointment-time',
@@ -18,9 +22,9 @@ export class AbmAppointmentTimeComponent{
   constructor(private appointmentTimeService: AppointmentTimeService, private modalService: ModalService) {}
 
   ngOnInit(): void {
-    this.modalService.loading("Obteniendo horarios de atención"); //revisar
+    this.modalService.loading("Obteniendo horarios de atención");
     this.getAppointmentTimes();
-    this.modalService.loadingClose(); //revisar
+    this.modalService.loadingClose(); 
   }
 
   async getAppointmentTimes() {

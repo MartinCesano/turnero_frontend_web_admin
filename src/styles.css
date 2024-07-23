@@ -7,3 +7,24 @@ body {
   padding: 0;
   background-color: #ffffff;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/*-------------- styles del modal       -----------------------------------------*/
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.757) !important; /* Color de fondo oscuro con opacidad */
+}
+/* Opcional: Estiliza el contenedor del diálogo */
+.mat-dialog-container {
+background: white;
+padding: 20px;
+border-radius: 4px;
+}
+
+.no-scroll {
+overflow: hidden;
+height: 100%;
+}
