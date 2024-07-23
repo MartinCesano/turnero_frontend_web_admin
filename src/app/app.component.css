@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #2a2a2e;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+
+
+
+
+
+/* styles del modal*/
+.cdk-overlay-backdrop {
+    background-color: rgba(0, 0, 0, 0.611) !important;
+    /* Color de fondo oscuro con opacidad */
+}
+
+/* Opcional: Estiliza el contenedor del diálogo */
+.mat-dialog-container {
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+
+.no-scroll {
+    overflow: hidden;
+    height: 100%;
+}

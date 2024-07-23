@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/services/api.service';
 import { ModalService } from '../../components/modals/modal.service';
 
-
-
 @Component({
   selector: 'abm-appointment-time',
   standalone: true,
@@ -12,6 +10,7 @@ import { ModalService } from '../../components/modals/modal.service';
   templateUrl: './abm-appointment-time.component.html',
   styleUrl: './abm-appointment-time.component.css'
 })
+
 export class AbmAppointmentTimeComponent{
   appointmentTimes: any[] = [];
   selectedAppointment: any;
@@ -19,7 +18,9 @@ export class AbmAppointmentTimeComponent{
   constructor(private apiService: ApiService, private modalService: ModalService) {}
 
   ngOnInit(): void {
+    this.modalService.loading("Obteniendo horarios de atención"); //revisar
     this.getAppointmentTimes();
+    this.modalService.loadingClose(); //revisar
   }
 
   async getAppointmentTimes() {

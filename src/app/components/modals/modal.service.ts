@@ -33,10 +33,6 @@ export class ModalService {
   }
   //endregion
 
-
-  
-
-
   //region Modal Cargando
   loading(text: string | null): void {
     document.body.classList.add('no-scroll'); // Deshabilitar el scroll
@@ -59,7 +55,4 @@ export class ModalService {
     this.dialog.closeAll();
   }
   //endregion
-
-
-
 }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth-guard.service';
+import { LoginComponent } from './template/login/login.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,10 +12,6 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () => import('./template/home/home.component').then(m => m.HomeComponent)
       },
-      {
-        path: 'form-products',
-        loadComponent: () => import('./template/form-products/form-products.component').then(m => m.FormProductsComponent)
-      }, 
       {
         path: 'abm-appointment-time',
         loadComponent: () => import('./template/abm-appointment-time/abm-appointment-time.component').then(m => m.AbmAppointmentTimeComponent)
