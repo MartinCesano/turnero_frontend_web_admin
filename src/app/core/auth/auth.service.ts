@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
-import { backendUrl } from './api-environments';
+import { backendUsersUrl } from './auth-environments';
 
 @Injectable({
   providedIn: 'root',

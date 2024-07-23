@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../core/services/api.service';
+import { AppointmentTimeService } from '../../core/services/appointment-time.service';
 import { ModalService } from '../../components/modals/modal.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class AbmAppointmentTimeComponent{
   appointmentTimes: any[] = [];
   selectedAppointment: any;
 
-  constructor(private apiService: ApiService, private modalService: ModalService) {}
+  constructor(private appointmentTimeService: AppointmentTimeService, private modalService: ModalService) {}
 
   ngOnInit(): void {
     this.modalService.loading("Obteniendo horarios de atención"); //revisar
@@ -25,7 +25,7 @@ export class AbmAppointmentTimeComponent{
 
   async getAppointmentTimes() {
     try {
-      this.appointmentTimes = await this.apiService.getAppointmentTimes();
+      this.appointmentTimes = await this.appointmentTimeService.getAppointmentTimes();
     } catch (error) {
       console.error('Error fetching appointment times:', error);
     }
@@ -41,7 +41,7 @@ export class AbmAppointmentTimeComponent{
         endTime: endTimeInput.value.toString()
       };
 
-      const response = await this.apiService.createAppointmentTime(newAppointmentTime);
+      const response = await this.appointmentTimeService.createAppointmentTime(newAppointmentTime);
       console.log('New appointment time created:', response);
       this.getAppointmentTimes();
       
@@ -62,7 +62,7 @@ export class AbmAppointmentTimeComponent{
   async deleteAppointmentTime() {
     try {
       if (this.selectedAppointment) {
-        await this.apiService.deleteAppointmentTime(this.selectedAppointment.id);
+        await this.appointmentTimeService.deleteAppointmentTime(this.selectedAppointment.id);
         this.appointmentTimes = this.appointmentTimes.filter(app => app.id !== this.selectedAppointment.id);
         this.selectedAppointment = null;
       }
@@ -74,7 +74,7 @@ export class AbmAppointmentTimeComponent{
   async updateAppointmentTime() {
     try {
       if (this.selectedAppointment) {
-        await this.apiService.updateAppointmentTime(this.selectedAppointment);
+        await this.appointmentTimeService.updateAppointmentTime(this.selectedAppointment);
         this.appointmentTimes = this.appointmentTimes.map(app => 
           app.id === this.selectedAppointment.id ? this.selectedAppointment : app
         );

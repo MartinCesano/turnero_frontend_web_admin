@@ -19,9 +19,7 @@ export class HeaderComponent {
       sidebar.classList.toggle('md:translate-x-0');
       sidebar.classList.toggle('sm:-translate-x-80');
       sidebar.classList.toggle('sm:translate-x-0');   
-      sidebar.classList.toggle('-translate-x-80');   
-
-      
+      sidebar.classList.toggle('-translate-x-80');         
     }
   }
 

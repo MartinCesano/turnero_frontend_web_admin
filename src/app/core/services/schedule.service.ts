@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import axios from 'axios';
+import { HttpErrorResponse } from '@angular/common/http';
+import { backendUrl } from './api-environments';
+import { ModalService } from '../../components/modals/modal.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ScheduleService {
+
+  constructor( private modalService: ModalService) { }
+
+  async getSchedules(): Promise<any> {
+    try {
+      const response = await axios.get(`${backendUrl}/schedule`);
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      this.modalService.openMenssageTypes({
+        text: "Error en la obtencion de los horarios.",
+        subtitle: (error as any).response.data.message,
+        url: null,
+        type: "error"
+      })
+      throw new HttpErrorResponse({ error });
+    }
+  }
+}
