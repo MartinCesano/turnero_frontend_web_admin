@@ -17,9 +17,7 @@ export class AuthService {
     try {
       const response = (await axios.post(`${backendUsersUrl}/login`, body)).data;
       localStorage.setItem('token', JSON.stringify(response));
-      
-      this.scheduleTokenRefresh(response.expirationTime); //esto es para ejecutar la función de refreshToken
-
+      this.scheduleTokenRefresh(response.expirationTime); // Esto es para ejecutar la función de refreshToken
       return response;
     } catch (error) {
       throw new HttpErrorResponse({ error });
@@ -36,7 +34,6 @@ export class AuthService {
 
   async refreshToken() {
     const tokenObject = JSON.parse(localStorage.getItem('token') ?? '{"refreshToken":""}');
-
     try {
       const response = (
         await axios.get(`${backendUsersUrl}/refresh`, {
@@ -47,11 +44,8 @@ export class AuthService {
       ).data;
       tokenObject.accessToken = response.accessToken;
       tokenObject.expirationTime = response.expirationTime;
-
       localStorage.setItem('token', JSON.stringify(tokenObject));
-      
-      // Schedule the next token refresh
-      this.scheduleTokenRefresh(response.expirationTime); // ejecuta la funcion del refresh token para iniciar un nuevo ciclo
+      this.scheduleTokenRefresh(response.expirationTime); // Ejecuta la función del refresh token para iniciar un nuevo ciclo
     } catch (error) {
       console.error('Error refreshing token', error);
     }
@@ -65,7 +59,6 @@ export class AuthService {
     const currentTime = moment();
     const expirationMoment = moment(expirationTime);
     const timeToExpire = expirationMoment.diff(currentTime);
-
     if (timeToExpire > 0) {
       const refreshTime = timeToExpire * 0.5; // Se cambia a 0.5 para refrescar a mitad del tiempo
       timer(refreshTime).subscribe(async () => {
@@ -76,15 +69,30 @@ export class AuthService {
     }
   }
 
-  //es cuando se inicia la aplicación o recarga la pagina
   public initializeTokenRefresh(): void { 
-    const tokenString = localStorage.getItem('token'); //obtiene el token del local storage
+    const tokenString = localStorage.getItem('token'); // Obtiene el token del local storage
     if (tokenString) {
-      const tokenObject = JSON.parse(tokenString) as TokenI; //lo transforma a objeto
-      const expirationTime = tokenObject.expirationTime; //consigue el tiempo de expiración
+      const tokenObject = JSON.parse(tokenString) as TokenI; // Lo transforma a objeto
+      const expirationTime = tokenObject.expirationTime; // Consigue el tiempo de expiración
       if (expirationTime) {
-        this.scheduleTokenRefresh(expirationTime); //ejecuta la función de del ciclo de refreshToken
+        this.scheduleTokenRefresh(expirationTime); // Ejecuta la función del ciclo de refreshToken
       }
+    }
+  }
+
+  async isTokenValid(): Promise<boolean> {
+    const tokenString = localStorage.getItem('token');
+    if (!tokenString) {
+      return false;
+    }
+    const tokenObject = JSON.parse(tokenString) as TokenI;
+    try {
+      const response = await axios.post(`${backendUsersUrl}/auth/validate-token`, {
+        token: tokenObject.accessToken,
+      });
+      return response.data.valid;
+    } catch (error) {
+      return false;
     }
   }
 }

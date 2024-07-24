@@ -31,7 +31,7 @@ export const routes: Routes = [
 
     ],
 
-    //canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
