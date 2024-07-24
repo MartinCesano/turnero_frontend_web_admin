@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output,  Input } from '@angular/core';
-import { ApiService } from '../../core/services/api.service';
-
+import { WorkdayService } from '../../core/services/workday.service';
 @Component({
   selector: 'app-abm-workday',
   standalone: true,
@@ -10,6 +9,11 @@ import { ApiService } from '../../core/services/api.service';
   styleUrl: './abm-workday.component.css'
 })
 export class AbmWorkdayComponent implements OnInit {
+  
+constructor(private workdayService: WorkdayService ) { }
+// #endregion declaracion variables
+
+
 // #region declaracion variables
 monthNames: string[] = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -51,9 +55,6 @@ appoinments=  [
 
 @Input() avaibleSchedule: {day:string, id:string}[] | null = null; //dias desabilitados
 
-constructor(private apiService: ApiService ) { }
-// #endregion declaracion variables
-
 workdays = [];
 // #region funciones de inicializacion
 ngOnInit(): void { //es lo primero que se ejecuta
@@ -77,12 +78,12 @@ renderCalendar(month: number, year: number): void { //renderiza el calendario
       if (i === 0 && j < firstDay) {
         week.push(null);
       } else if (date > daysInMonth) {
-        week.push(null);
-      } else {
-        //comparamos las fechas del calendario con las del backend
-        //acaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        week.push(date);
-        date++; 
+  week.push(null);
+} else {
+  //comparamos las fechas del calendario con las del backend
+  //acaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  week.push(date);
+  date++; 
 
       }
     }
@@ -141,7 +142,7 @@ canSelectDay(day: number | null): boolean {
 }
 
 getWorkdays(): void { //consigue los dias
-  this.workdays = this.apiService.getWorkdays()
+  this.workdays = this.workdayService.getWorkdays()
 } 
 
 getDayAvaible() : void{ //verifico si el dia esta disponible
@@ -168,7 +169,7 @@ findDayId(day: number | null) { //busca el id del dia
 async selectWorkday(workday: number | null): Promise<void> {
   this.selectedDay = workday;
   const fecha: string = this.formatDateToView(this.currentYear, this.currentMonth + 1, workday ?? 0);
-  this.selectedDayObject = await this.apiService.getWorkdayByDate(fecha);
+  this.selectedDayObject = await this.workdayService.getWorkdayByDate(fecha);
   this.selectedDayDate = fecha;
 }
 

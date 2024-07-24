@@ -1,0 +1,1 @@
+export const backendUrl = 'https://lkmqtcl5-3000.brs.devtunnels.ms'; // URL de la API

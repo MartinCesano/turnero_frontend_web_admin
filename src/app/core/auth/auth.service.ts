@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { LoginI, RegisterI, TokenI } from './interfaces/token';
+import { LoginI, RegisterI, TokenI } from '../../interfaces/token';
 import { HttpErrorResponse } from '@angular/common/http';
 import { timer } from 'rxjs';
 import moment from 'moment';
+import { backendUsersUrl } from './auth-environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  url = 'http://localhost:3000';
 
   constructor() {}
 
   async login(body: LoginI): Promise<TokenI> {
     try {
-      const response = (await axios.post(`${this.url}/login`, body)).data;
+      const response = (await axios.post(`${backendUsersUrl}/login`, body)).data;
       localStorage.setItem('token', JSON.stringify(response));
       
       this.scheduleTokenRefresh(response.expirationTime); //esto es para ejecutar la función de refreshToken
@@ -28,7 +28,7 @@ export class AuthService {
 
   async register(body: RegisterI): Promise<void> {
     try {
-      return (await axios.post(`${this.url}/register`, body)).data;
+      return (await axios.post(`${backendUsersUrl}/register`, body)).data;
     } catch (error) {
       throw new HttpErrorResponse({ error });
     }
@@ -39,7 +39,7 @@ export class AuthService {
 
     try {
       const response = (
-        await axios.get(`${this.url}/refresh`, {
+        await axios.get(`${backendUsersUrl}/refresh`, {
           headers: {
             'refresh-token': tokenObject.refreshToken,
           },

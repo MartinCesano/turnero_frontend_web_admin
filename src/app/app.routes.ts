@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuardService } from './core/auth/auth-guard.service';
 import { LoginComponent } from './template/login/login.component';
 
 export const routes: Routes = [
@@ -24,6 +24,11 @@ export const routes: Routes = [
         path: 'abm-workday',
         loadComponent: () => import('./template/abm-workday/abm-workday.component').then(m => m.AbmWorkdayComponent)
       },
+      {
+        path: 'abm-customers',
+        loadComponent: () => import('./template/abm-customers/abm-customers.component').then(m => m.AbmCustomersComponent)
+      },
+
     ],
 
     //canActivate: [AuthGuardService],
