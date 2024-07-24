@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoadingComponent } from './loading/loading.component';
 import { MessageTypesComponent } from './message-types/message-types.component'; 
+import { FormCustomerComponent } from './form-customer/form-customer.component';
 import { Router } from '@angular/router';
 
 
@@ -33,6 +34,8 @@ export class ModalService {
   }
   //endregion
 
+
+
   //region Modal Cargando
   loading(text: string | null): void {
     document.body.classList.add('no-scroll'); // Deshabilitar el scroll
@@ -55,4 +58,30 @@ export class ModalService {
     this.dialog.closeAll();
   }
   //endregion
+
+
+
+  //region form customer
+
+  //region Modal de Mensajes
+  formCustomer(data: any): void {
+    const dialogRef = this.dialog.open(FormCustomerComponent, {
+      width: '700px',
+      disableClose: false,
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (data.url){
+        this.router.navigateByUrl(data.url)
+      }
+      // Acciones después de cerrar el modal
+    });
+  }
+  //endregion
+
+
+  //endregion
+
+
 }

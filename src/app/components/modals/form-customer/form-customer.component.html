@@ -1,0 +1,94 @@
+<div class="container text-dark p-3">
+    <h1 class="text-center mt-5">Registrar cliente</h1>
+    <form [formGroup]="customerForm" (ngSubmit)="registerCustomer()">
+      <div class="mb-3">
+        <label for="document" class="form-label">Documento</label>
+        <input type="number" formControlName="document" class="form-control" min="10000000" max="99999999" id="document" placeholder="Ingresa tu documento" required>
+        <div *ngIf="customerForm.get('document')?.invalid && (customerForm.get('document')?.dirty || customerForm.get('document')?.touched)">
+          <div class="text-danger" *ngIf="customerForm.get('document')?.errors?.['required']">El documento es requerido.</div>
+          <div class="text-danger" *ngIf="customerForm.get('document')?.errors?.['min']">El documento debe tener 8 caracteres.</div>
+          <div class="text-danger" *ngIf="customerForm.get('document')?.errors?.['max']">El documento debe tener 8 caracteres.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" formControlName="name" class="form-control" minlength="3" maxlength="30" id="name" placeholder="Ingresa tu Nombre" required>
+        <div *ngIf="customerForm.get('name')?.invalid && (customerForm.get('name')?.dirty || customerForm.get('name')?.touched)">
+          <div class="text-danger" *ngIf="customerForm.get('name')?.errors?.['required']">El nombre es requerido.</div>
+          <div class="text-danger" *ngIf="customerForm.get('name')?.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</div>
+          <div class="text-danger" *ngIf="customerForm.get('name')?.errors?.['maxlength']">El nombre debe tener máximo 30 caracteres.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="lastname" class="form-label">Apellido</label>
+        <input type="text" formControlName="lastname" class="form-control" minlength="3" maxlength="30" id="lastname" placeholder="Ingresa tu Apellido" required>
+        <div *ngIf="customerForm.get('lastname')?.invalid && (customerForm.get('lastname')?.dirty || customerForm.get('lastname')?.touched)">
+          <div class="text-danger" *ngIf="customerForm.get('lastname')?.errors?.['required']">El apellido es requerido.</div>
+          <div class="text-danger" *ngIf="customerForm.get('lastname')?.errors?.['minlength']">El apellido debe tener al menos 3 caracteres.</div>
+          <div class="text-danger" *ngIf="customerForm.get('lastname')?.errors?.['maxlength']">El apellido debe tener máximo 30 caracteres.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Teléfono</label>
+          <div class="row">
+            <div class="col-3 pe-1">
+                <input type="text" class="form-control bg-secondary" id="phoneCountryCode" placeholder="+54-9" disabled>
+            </div>
+            <div class="col-3 ps-0 pe-1">
+                <input type="number" formControlName="phoneAreaCode" class="form-control" id="phoneAreaCode" placeholder="Ej (353)" required
+                (focus)="showHelpMessage('Codigo de area Ej (353).')">
+            </div>
+            <div class="col-2 p-0 pe-1">
+                <input type="text" class="form-control bg-secondary" id="phoneAreaCode" placeholder="15" disabled>
+            </div>
+            
+            <div class="col-4 ps-0">
+              <input 
+                type="number" 
+                formControlName="phoneNumber" 
+                class="form-control" 
+                id="phoneNumber" 
+                placeholder="Ej (499701)" 
+                required 
+                (focus)="showHelpMessage('Número de teléfono Ej (499701).')"
+              >
+            </div>
+  
+          </div>
+        <div *ngIf="customerForm.get('phoneAreaCode')?.invalid && (customerForm.get('phoneAreaCode')?.dirty || customerForm.get('phoneAreaCode')?.touched)">
+          <div class="text-danger" *ngIf="customerForm.get('phoneAreaCode')?.errors?.['required']">El código de área es requerido.</div>
+          <div class="text-danger" *ngIf="customerForm.get('phoneAreaCode')?.errors?.['min']">El codigo de area debera tener 2 o mas caracteres.</div>
+          <div class="text-danger" *ngIf="customerForm.get('phoneAreaCode')?.errors?.['max']">El codigo de area debera tener 4 o menos caracteres.</div>
+        </div>
+        <div *ngIf="customerForm.get('phoneNumber')?.invalid && (customerForm.get('phoneNumber')?.dirty || customerForm.get('phoneNumber')?.touched)">
+          <div class="text-danger" *ngIf="customerForm.get('phoneNumber')?.errors?.['required']">El número de teléfono es requerido.</div>
+          <div class="text-danger" *ngIf="customerForm.get('phoneNumber')?.errors?.['min']">El numero debera tener 6 o mas caracteres.</div>
+          <div class="text-danger" *ngIf="customerForm.get('phoneNumber')?.errors?.['max']">El numero debera tener 8 o menos caracteres.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="birthdate" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" formControlName="birthdate" class="form-control" id="birthdate" placeholder="Ingresa tu cumpleaños">
+      </div>
+      <button type="submit" class="btn btn-primary">Confirmar</button>
+    </form>
+  </div>
+  
+  
+  
+  
+  <!-- Toast container -->
+  <div aria-live="polite" aria-atomic="true" style="position: relative;">
+    <div style="position: absolute; top: 0; right: 0;">
+      <div class="toast" [class.show]="isHelpVisible" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Ayuda</strong>
+          <button type="button" class="btn-close" aria-label="Close" (click)="hideHelpMessage()"></button>
+        </div>
+        <div class="toast-body">
+          {{ helpMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
