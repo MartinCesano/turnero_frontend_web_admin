@@ -13,9 +13,24 @@ export class AppointmentTimeService {
 
   constructor(private modalService: ModalService) { }
   
+    // Método para obtener el token almacenado en el localStorage
+    private getAccessToken(): string | null {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const parsedToken = JSON.parse(token);
+        return parsedToken.accessToken || null;
+      }
+      return null;
+    }
+
+
   async getAppointmentTimes(): Promise<any> {
     try {
-      const response = await axios.get(`${backendUrl}/appointment-time`);
+      const response = await axios.get(`${backendUrl}/appointment-time`, {
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
       this.modalService.openMenssageTypes({
@@ -30,7 +45,11 @@ export class AppointmentTimeService {
 
   async createAppointmentTime(appointmentTime: any): Promise<any> {
     try {
-      const response = await axios.post(`${backendUrl}/appointment-time/`, appointmentTime);
+      const response = await axios.post(`${backendUrl}/appointment-time/`, appointmentTime,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
       this.modalService.openMenssageTypes({
@@ -45,7 +64,11 @@ export class AppointmentTimeService {
 
   async updateAppointmentTime(appointmentTime: any): Promise<any> {
     try {
-      const response = await axios.put(`${backendUrl}/appointment-time/${appointmentTime.id}`, appointmentTime);
+      const response = await axios.put(`${backendUrl}/appointment-time/${appointmentTime.id}`, appointmentTime,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
       this.modalService.openMenssageTypes({
@@ -60,7 +83,13 @@ export class AppointmentTimeService {
 
   async deleteAppointmentTime(id: number): Promise<any> {
     try {
-      const response = await axios.delete(`${backendUrl}/appointment-time/${id}`);
+      const response = await axios.delete(`${backendUrl}/appointment-time/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.getAccessToken()}`
+          }
+        }
+      );
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
       this.modalService.openMenssageTypes({

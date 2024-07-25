@@ -1,0 +1,34 @@
+<div class="container text-dark p-3">
+    <h3 class="display-6 mb-3 text-center">Editar Horarios</h3>
+    <div class="row m-3">
+        <label  for="idInputNombre" class="aria-label">Nombre:</label>
+        <input id="idInputNombre" class="form-control" [(ngModel)]="name">
+        </div>
+    <table class="table table-bordered table-hover table-lg">
+        <thead class="table-primary text-center">
+          <tr>
+            <th scope="col" class="fw-bold">Acciones</th>
+            <th scope="col">Inicia</th>
+            <th scope="col">Finaliza</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr *ngFor="let appointment of appointmentTimes;">
+            <td>
+                <input class="form-check-input fs-3" type="checkbox" value="true" id="flexCheckDefault" [checked]="isAppointmentTimeInSchedule(appointment)" (change)="selectAppointmentTime($event, appointment)">
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm">{{ appointment.startTime }}</button>
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm">{{ appointment.endTime }}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-left">
+            <button class="btn btn-primary ms-3" (click)="saveSchedule()">Listo</button>
+        </div>
+    </div>
+</div>

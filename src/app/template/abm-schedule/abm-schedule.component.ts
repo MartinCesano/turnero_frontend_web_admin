@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core'; // Import the OnInit interface
 import { ScheduleService } from '../../core/services/schedule.service';
+import { ModalService } from '../../components/modals/modal.service';
 export interface AppointmentTime {
   id: number;
   startTime: string;  // Ajusta el tipo según sea necesario, por ejemplo, Date
@@ -23,13 +24,13 @@ export interface Schedule {
 export class AbmScheduleComponent implements OnInit {
   // Inicializa como un array vacío
 
-  constructor(private scheduleService: ScheduleService) { }
-
+  constructor(private scheduleService: ScheduleService,   private modalService: ModalService) { }
   schedules: any;
+  selecetedSchedule: any;
   ngOnInit() {
     console.log('AbmScheduleComponent initialized');
     this.getSchedules();
-  }
+   }
 
   async getSchedules() {
     try {
@@ -39,4 +40,17 @@ export class AbmScheduleComponent implements OnInit {
       console.error('Error fetching schedules:', error);
     }
   }
+
+  addSchedule(schedule: any) {
+    this.modalService.formSchedule(schedule);
+    this.getSchedules()
+  }
+
+  deleteSchedule(){
+    
+  }
+  
+
+  
+
 }

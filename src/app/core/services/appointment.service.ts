@@ -7,4 +7,15 @@ import { backendUrl } from './api-environments';
 export class AppointmentService {
 
   constructor() { }
+
+    // Método para obtener el token almacenado en el localStorage
+    private getAccessToken(): string | null {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const parsedToken = JSON.parse(token);
+        return parsedToken.accessToken || null;
+      }
+      return null;
+    }
+
 }

@@ -22,9 +22,7 @@ export class AbmAppointmentTimeComponent{
   constructor(private appointmentTimeService: AppointmentTimeService, private modalService: ModalService) {}
 
   ngOnInit(): void {
-    this.modalService.loading("Obteniendo horarios de atención");
     this.getAppointmentTimes();
-    this.modalService.loadingClose(); 
   }
 
   async getAppointmentTimes() {

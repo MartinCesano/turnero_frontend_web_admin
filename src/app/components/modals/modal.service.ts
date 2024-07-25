@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoadingComponent } from './loading/loading.component';
 import { MessageTypesComponent } from './message-types/message-types.component'; 
 import { FormCustomerComponent } from './form-customer/form-customer.component';
+import { FormScheduleComponent } from './form-schedule/form-schedule.component';
 import { Router } from '@angular/router';
 
 
@@ -62,8 +63,6 @@ export class ModalService {
 
 
   //region form customer
-
-  //region Modal de Mensajes
   formCustomer(data: any): void {
     const dialogRef = this.dialog.open(FormCustomerComponent, {
       width: '700px',
@@ -79,6 +78,22 @@ export class ModalService {
     });
   }
   //endregion
+
+  //region form schedule
+  formSchedule(schedule: any): void {
+    const dialogRef = this.dialog.open(FormScheduleComponent, {
+      width: '700px',
+      disableClose: false,
+      data: schedule
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (schedule.url){
+        this.router.navigateByUrl(schedule.url)
+      }
+      // Acciones después de cerrar el modal
+    });
+  }
 
 
   //endregion

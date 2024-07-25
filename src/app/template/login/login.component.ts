@@ -37,10 +37,11 @@ export class LoginComponent {
     }
     try {
       await this.authService.login(this.loginForm.value);
+      console.log('Login correcto');
       this.router.navigate(['/home']);
     } catch (error: any) {
       console.log(error)
-      alert('Error en el inicio de sesión');
+      //alert('Error en el inicio de sesión');
     }
   }
 }

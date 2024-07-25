@@ -11,9 +11,25 @@ import { backendUrl } from './api-environments';
 export class WorkdayService {
 
   constructor(private modalService: ModalService) { }
+
+
+    // Método para obtener el token almacenado en el localStorage
+    private getAccessToken(): string | null {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const parsedToken = JSON.parse(token);
+        return parsedToken.accessToken || null;
+      }
+      return null;
+    }
+
   getWorkdays(): any {
     try {
-      return axios.get(`${backendUrl}/workday`);
+      return axios.get(`${backendUrl}/workday`,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
     } catch (error) {
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de los dias.",
@@ -26,7 +42,11 @@ export class WorkdayService {
   }
   getWorkdayByDate(date: string): any {
     try {
-      return axios.get(`${backendUrl}/workday/${date}`);
+      return axios.get(`${backendUrl}/workday/${date}`,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
     } catch (error) {
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
