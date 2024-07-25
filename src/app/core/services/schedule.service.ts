@@ -9,21 +9,21 @@ import { ModalService } from '../../components/modals/modal.service';
 })
 export class ScheduleService {
 
-  constructor( private modalService: ModalService) { }
+  constructor(private modalService: ModalService) { }
 
-    // Método para obtener el token almacenado en el localStorage
-    private getAccessToken(): string | null {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const parsedToken = JSON.parse(token);
-        return parsedToken.accessToken || null;
-      }
-      return null;
+  // Método para obtener el token almacenado en el localStorage
+  private getAccessToken(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const parsedToken = JSON.parse(token);
+      return parsedToken.accessToken || null;
     }
+    return null;
+  }
 
   async getSchedules(): Promise<any> {
     try {
-      const response = await axios.get(`${backendUrl}/schedule`,{
+      const response = await axios.get(`${backendUrl}/schedule`, {
         headers: {
           Authorization: `Bearer ${this.getAccessToken()}`
         }
@@ -58,15 +58,35 @@ export class ScheduleService {
       throw new HttpErrorResponse({ error });
     }
   }
-
-
-
-
-
-
-  async updateSchedule(id:number, schedule:any): Promise<any> {
+  async deleteSchedule(id: number): Promise<void> {
     try {
-      const response = await axios.put(`${backendUrl}/schedule/${id}`,schedule,{
+        const token = await this.getAccessToken();
+        await axios.delete(`${backendUrl}/schedule/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        this.modalService.openMenssageTypes({
+            text: "Horario eliminado correctamente.",
+            subtitle: null,
+            url: null,
+            type: "success"
+        });
+    } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || "Error desconocido";
+        this.modalService.openMenssageTypes({
+            text: "Error en la eliminación de un horario.",
+            subtitle: errorMessage,
+            url: null,
+            type: "error"
+        });
+        throw error; // Propaga el error para que el componente pueda manejarlo
+    }
+}
+
+  async updateSchedule(id: number, schedule: any): Promise<any> {
+    try {
+      const response = await axios.put(`${backendUrl}/schedule/${id}`, schedule, {
         headers: {
           Authorization: `Bearer ${this.getAccessToken()}`
         }

@@ -21,7 +21,7 @@ export class FormScheduleComponent {
   name = "";
   
   constructor(
-     @Inject(MAT_DIALOG_DATA) private data: any,
+     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<FormCustomerComponent>,
     public dialog: MatDialog,
     private appointmentTimeService:AppointmentTimeService,
@@ -77,9 +77,8 @@ export class FormScheduleComponent {
       this.scheduleService.createSchedule({name: this.name, appointmentTimes: this.appointmentTimesForUpdate});
     }
 
-    this.data = {id:this.data,name: this.name, appointmentTimes: this.appointmentTimesForUpdate}
-    this.dialogRef.close();
-
+    this.dialogRef.close({ name: this.name, appointmentTimes: this.appointmentTimesForUpdate });
+    
   }
 
 }

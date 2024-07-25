@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="display-6 mb-3">Horarios</h1>
-      <button (click)="addSchedule(null)" class="btn btn-primary mb-3">Crear Horario Manualmente</button>
+      <button (click)="addSchedule(null)" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Crear Horario</button>
       <div class="row">
         <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
           <div class="card d-flex flex-column h-100">
@@ -18,7 +18,7 @@
               <button (click)="addSchedule(schedule)"  class="btn btn-outline-success flex-fill me-2">
                 <i class="bi bi-pencil"></i> Editar
               </button>
-              <button (click)="deleteSchedule()" class="btn btn-outline-danger flex-fill">
+              <button (click)="deleteSchedule(schedule)" class="btn btn-outline-danger flex-fill">
                 <i class="bi bi-trash"></i> Eliminar
               </button>
             </div>
