@@ -23,6 +23,25 @@ export class WorkdayService {
       return null;
     }
 
+
+    updateWorkday(id: number, workday: any): any {
+      try {
+        return axios.put(`${backendUrl}/workday/${id}`, workday, {
+          headers: { Authorization: `Bearer ${this.getAccessToken()}` }
+        });
+      } catch (error) {
+        this.modalService.openMenssageTypes({
+          text: "Error al actualizar el dia.",
+          subtitle: (error as any).response.data.message,
+          backendUrl: null,
+          type: "error"
+        })
+        throw new HttpErrorResponse({ error });
+      }
+    }
+    
+
+
   getWorkdays(): any {
     try {
       return axios.get(`${backendUrl}/workday`,{

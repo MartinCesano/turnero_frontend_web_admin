@@ -6,6 +6,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { MessageTypesComponent } from './message-types/message-types.component';
 import { FormCustomerComponent } from './form-customer/form-customer.component';
 import { FormScheduleComponent } from './form-schedule/form-schedule.component';
+import { FormWorkdayComponent } from './form-workday/form-workday.component';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,8 @@ export class ModalService {
   }
   //endregion
 
+
+
   //region Modal Cargando
   loading(text: string | null): void {
     document.body.classList.add('no-scroll'); // Deshabilitar el scroll
@@ -55,6 +58,8 @@ export class ModalService {
   }
   //endregion
 
+
+
   //region form customer
   formCustomer(data: any): void {
     const dialogRef = this.dialog.open(FormCustomerComponent, {
@@ -71,6 +76,7 @@ export class ModalService {
     });
   }
   //endregion
+
 
   //region form schedule
   formSchedule(schedule: any): Promise<any> {
@@ -96,6 +102,33 @@ export class ModalService {
     });
   }
   //endregion
+
+
+  //region form workday
+  formWorkday(schedule: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(FormWorkdayComponent, {
+        width: '700px',
+        disableClose: false,
+        data: schedule
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+  //endregion
+
 
 
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output,  Input } from '@angular/core';
 import { WorkdayService } from '../../core/services/workday.service';
+import { ModalService } from '../../components/modals/modal.service';
 @Component({
   selector: 'app-abm-workday',
   standalone: true,
@@ -10,7 +11,7 @@ import { WorkdayService } from '../../core/services/workday.service';
 })
 export class AbmWorkdayComponent implements OnInit {
   
-constructor(private workdayService: WorkdayService ) { }
+constructor(private workdayService: WorkdayService, private modalService: ModalService) { }
 // #endregion declaracion variables
 
 
@@ -165,12 +166,15 @@ findDayId(day: number | null) { //busca el id del dia
   return null;
 }
 
-@Output() setDaySelected: EventEmitter<any> = new EventEmitter();
 async selectWorkday(workday: number | null): Promise<void> {
   this.selectedDay = workday;
   const fecha: string = this.formatDateToView(this.currentYear, this.currentMonth + 1, workday ?? 0);
-  this.selectedDayObject = await this.workdayService.getWorkdayByDate(fecha);
-  this.selectedDayDate = fecha;
+
+  this.modalService.formWorkday(fecha);
+  
+
+  //this.selectedDayObject = await this.workdayService.getWorkdayByDate(fecha);
+  //this.selectedDayDate = fecha;
 }
 
 private formatDateToView(year: number, month: number, day: number): string {
