@@ -30,14 +30,12 @@ export class LoginComponent {
   }
 
   async onSubmit(): Promise<void> {
-    console.log(this.loginForm)
     this.submitted=true
     if (this.loginForm.invalid) {
       return;
     }
     try {
       await this.authService.login(this.loginForm.value);
-      console.log('Login correcto');
       this.router.navigate(['/home']);
     } catch (error: any) {
       console.log(error)

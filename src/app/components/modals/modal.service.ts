@@ -89,7 +89,6 @@ export class ModalService {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          console.log(result);
           this.scheduleSubject.next(result); // Emitir los datos a través del Subject
           resolve(result); // Resolver la promesa con el resultado
         } else {
@@ -115,7 +114,6 @@ export class ModalService {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          console.log(result);
           this.scheduleSubject.next(result); // Emitir los datos a través del Subject
           resolve(result); // Resolver la promesa con el resultado
         } else {

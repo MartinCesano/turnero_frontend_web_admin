@@ -5,17 +5,17 @@
       <button (click)="addSchedule(null)" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Crear Horario</button>
       <div class="row">
         <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
-          <div class="card d-flex flex-column h-100">
+          <div class="relative flex flex-col bg-clip-border rounded-xl bg-light p-4 shadow-sm overflow-hidden">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title mb-3">{{ schedule.name }}</h5>
-              <div class="row mt-3 overflow-auto">
-                <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="col-6 col-md-4 col-lg-3 mb-2">
-                  <span class="badge bg-secondary text-truncate">{{ appointmentTime.startTime }}</span>
+              <div class="appointment-times-container mt-3">
+                <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="appointment-time-item">
+                  <span class="badge bg-primary">{{ appointmentTime.startTime }} </span>
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-between p-2 mt-auto">
-              <button (click)="addSchedule(schedule)"  class="btn btn-outline-success flex-fill me-2">
+            <div class="btn-container d-flex justify-content-between p-2 mt-auto">
+              <button (click)="addSchedule(schedule)" class="btn btn-outline-success flex-fill me-2">
                 <i class="bi bi-pencil"></i> Editar
               </button>
               <button (click)="deleteSchedule(schedule)" class="btn btn-outline-danger flex-fill">
@@ -28,7 +28,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
   <div class="modal-dialog">

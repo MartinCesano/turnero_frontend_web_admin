@@ -17,7 +17,6 @@ export class SidebarComponent {
   }
 
   activarSidebar() {
-    console.log("Activar sidebar");
     const sidebar = document.getElementById('sidebar');
     if (sidebar) {
       sidebar.classList.toggle('show');

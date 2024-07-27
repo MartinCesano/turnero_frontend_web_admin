@@ -76,12 +76,6 @@ export class FormWorkdayComponent implements OnInit {
       !this.appointmentTimesSelected.some((apptSelected: any) => appt.appointmentTimes.id === apptSelected.id)
     );
   
-    console.log('appointmentTimesCoinciden:', appointmentTimesCoinciden);
-    console.log('appointmentTimesNoCoinciden:', appointmentTimesNoCoinciden);
-    console.log('appointmentsCoinciden:', appointmentsCoinciden);
-    console.log('appointmentsNoCoinciden:', appointmentsNoCoinciden);
-
-
     if(appointmentTimesNoCoinciden){
       let newAppointmentParaCrear:any = [];
       for await (let appointmentsTime of appointmentTimesNoCoinciden) {
@@ -90,7 +84,6 @@ export class FormWorkdayComponent implements OnInit {
           appointmentTimes: appointmentsTime.id,
           state:2                //esto esta malllllllllllllll, tiene que buscar el estado libre en la base de datos, acomodar luego importanteeeeeeeeeeeeeeeeeeeeeeeee   muy importanteeeeeeeeeeeeeeeee
         });
-        console.log(newAppointmentParaCrear)
       }
       await this.appointmentService.createAppointment(newAppointmentParaCrear);
     }

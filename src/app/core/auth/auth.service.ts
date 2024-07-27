@@ -16,10 +16,7 @@ export class AuthService {
 
   async login(body: LoginI): Promise<TokenI> {
     try {
-      console.log('body', body);
-      console.log('backendUsersUrl', backendUsersUrl);
       const response = (await axios.post(`${backendUsersUrl}/login`, body)).data;
-      console.log('response', response);
       localStorage.setItem('token', JSON.stringify(response));
       this.scheduleTokenRefresh(response.expirationTime); // Esto es para ejecutar la función de refreshToken
       return response;

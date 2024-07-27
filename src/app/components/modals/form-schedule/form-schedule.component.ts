@@ -36,7 +36,6 @@ export class FormScheduleComponent {
   async getAppointmentTimes() {
     try {
       this.appointmentTimes = await this.appointmentTimeService.getAppointmentTimes();
-      console.log(this.appointmentTimes)
       this.appointmentTimesForUpdate = this.data.appointmentTimes.slice() //crea una copia del array
       this.name = this.data.name.slice();
     } catch (error) {
@@ -58,8 +57,6 @@ export class FormScheduleComponent {
   }
 
   selectAppointmentTime(event: any, appointmentTime: any) {
-    console.log('Selected appointment time:', event);
-    console.log('Selected appointment time:', appointmentTime);
     if (event.target.checked) {
       this.appointmentTimesForUpdate.push(appointmentTime);
     } else {
@@ -68,7 +65,6 @@ export class FormScheduleComponent {
   }
 
   saveSchedule(){
-    console.log("entro")
     if(this.data){
       //es put
       this.scheduleService.updateSchedule(this.data.id, {name: this.name, appointmentTimes: this.appointmentTimesForUpdate});

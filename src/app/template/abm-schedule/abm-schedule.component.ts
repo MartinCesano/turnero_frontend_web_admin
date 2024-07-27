@@ -28,7 +28,6 @@ export class AbmScheduleComponent implements OnInit {
   constructor(private scheduleService: ScheduleService, private modalService: ModalService) { }
 
   ngOnInit() {
-    console.log('AbmScheduleComponent initialized');
     this.getSchedules();
 
   }
@@ -36,7 +35,6 @@ export class AbmScheduleComponent implements OnInit {
   async getSchedules() {
     try {
       this.schedules = await this.scheduleService.getSchedules();
-      console.log('Schedules retrieved:', this.schedules);
     } catch (error) {
       console.error('Error fetching schedules:', error);
     }

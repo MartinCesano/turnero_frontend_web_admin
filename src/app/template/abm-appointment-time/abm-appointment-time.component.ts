@@ -44,7 +44,6 @@ export class AbmAppointmentTimeComponent{
       };
 
       const response = await this.appointmentTimeService.createAppointmentTime(newAppointmentTime);
-      console.log('New appointment time created:', response);
       this.getAppointmentTimes();
       
 
