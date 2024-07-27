@@ -32,7 +32,7 @@ async getAppointments(): Promise<any> {
     return response.data;  // Devuelve solo los datos de la respuesta
   } catch (error) {
     this.modalService.openMenssageTypes({
-      text: "Error en la obtencion de las citas.",
+      text: "Error en la obtencion de los turnos.",
       subtitle: (error as any).response.data.message,
       url: null,
       type: "error"
@@ -52,7 +52,25 @@ async createAppointment(appointment: any): Promise<any> {
     return response.data;
   } catch (error) {
     this.modalService.openMenssageTypes({
-      text: "Error en la creación de una cita.",
+      text: "Error en la agregar el turno.",
+      subtitle: (error as any).response.data.message,
+      url: null,
+      type: "error"
+    })
+    throw new HttpErrorResponse({ error });
+  }
+}
+
+async deleteAppointment(ids: number[]): Promise<any> {
+  try {
+    const response = await axios.delete(`${backendUrl}/appointment`, {
+      data: {"ids":ids},
+      headers: { Authorization: `Bearer ${this.getAccessToken()}` }
+    });
+    return response.data;
+  } catch (error) {
+    this.modalService.openMenssageTypes({
+      text: "Error al eliminar sacar el turno.",
       subtitle: (error as any).response.data.message,
       url: null,
       type: "error"

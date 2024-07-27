@@ -39,14 +39,14 @@ export class FormWorkdayComponent implements OnInit {
   }
 
   selectClosed(event: any) {
-    this.workday[0].close = event.target.checked;
+    this.workday[0].close = !event.target.checked;
   }
 
   async saveWorkday() {
     try {
       this.modalService.loading(null);
-      //await this.createAppointmentForWorkday()
-      this.workdayService.updateWorkday(this.workday[0].id, this.workday[0]);
+      await this.createAppointmentForWorkday()
+      this.workdayService.updateWorkday(this.workday[0].id, {close:this.workday[0].close});
       this.modalService.loadingClose();
       this.modalService.openMenssageTypes({ text: "Día actualizado correctamente.", subtitle: null, backendUrl: null, type: "success" });
       this.dialogRef.close();
@@ -56,49 +56,50 @@ export class FormWorkdayComponent implements OnInit {
   }
 
   async createAppointmentForWorkday() {
-    // Filtrar los appointmentTimes que coinciden
+    // Filtrar los appointmentTimes que coinciden // estos estan seleccionados y ya fueron creados
     const appointmentTimesCoinciden = this.appointmentTimesSelected.filter((apptSelected: any) => 
       this.workday[0].appointment.some((appt: any) => appt.appointmentTimes.id === apptSelected.id)
     );
   
-    // Filtrar los appointmentTimes que no coinciden
+    // Filtrar los appointmentTimes que no coinciden //estos son los que el admin decidio seleccionar pero no estan creados
     const appointmentTimesNoCoinciden = this.appointmentTimesSelected.filter((apptSelected: any) => 
       !this.workday[0].appointment.some((appt: any) => appt.appointmentTimes.id === apptSelected.id)
     );
   
-    // Filtrar los appointments que coinciden
+    // Filtrar los appointments que coinciden  //estos son los que el admin decidio seleccionar pero ya estan creados
     const appointmentsCoinciden = this.workday[0].appointment.filter((appt: any) => 
       this.appointmentTimesSelected.some((apptSelected: any) => appt.appointmentTimes.id === apptSelected.id)
     );
   
-    // Filtrar los appointments que no coinciden
+    // Filtrar los appointments que no coinciden //estos son los que el admin decidio no seleccionar y estan creados, hay que borrarlo o desactivarlo.
     const appointmentsNoCoinciden = this.workday[0].appointment.filter((appt: any) => 
       !this.appointmentTimesSelected.some((apptSelected: any) => appt.appointmentTimes.id === apptSelected.id)
     );
   
-    //console.log('appointmentTimesCoinciden', appointmentTimesCoinciden);// estos estan seleccionados y ya fueron creados
+    console.log('appointmentTimesCoinciden:', appointmentTimesCoinciden);
+    console.log('appointmentTimesNoCoinciden:', appointmentTimesNoCoinciden);
+    console.log('appointmentsCoinciden:', appointmentsCoinciden);
+    console.log('appointmentsNoCoinciden:', appointmentsNoCoinciden);
 
-    //console.log('appointmentTimesNoCoinciden', appointmentTimesNoCoinciden);//estos son los que el admin decidio seleccionar pero no estan creados
 
-    //console.log('appointmentsCoinciden', appointmentsCoinciden); //estos son los que el admin decidio seleccionar pero ya estan creados
+    if(appointmentTimesNoCoinciden){
+      let newAppointmentParaCrear:any = [];
+      for await (let appointmentsTime of appointmentTimesNoCoinciden) {
+        newAppointmentParaCrear.push({
+          workday: this.workday[0].id,
+          appointmentTimes: appointmentsTime.id,
+          state:2                //esto esta malllllllllllllll, tiene que buscar el estado libre en la base de datos, acomodar luego importanteeeeeeeeeeeeeeeeeeeeeeeee   muy importanteeeeeeeeeeeeeeeee
+        });
+        console.log(newAppointmentParaCrear)
+      }
+      await this.appointmentService.createAppointment(newAppointmentParaCrear);
+    }
+    if(appointmentsNoCoinciden){
+      const arrayAppointmentsNoCoinciden = await appointmentsNoCoinciden.map((appt: any) => appt.id);
+      await this.appointmentService.deleteAppointment(arrayAppointmentsNoCoinciden);
+    }
 
-    //console.log('appointmentsNoCoinciden', appointmentsNoCoinciden);//estos son los que el admin decidio no seleccionar
 
-    //if(appointmentTimesNoCoinciden){
-    //  const newAppointmentParaCrear:any = [];
-    //  for await (let appointmentsTime of appointmentTimesNoCoinciden) {
-    //    newAppointmentParaCrear.push({
-    //      workday: this.workday[0].id,
-    //      appointmentTimes: appointmentsTime.id,
-    //      state:2                //esto esta malllllllllllllll, tiene que buscar el estado libre en la base de datos, acomodar luego importanteeeeeeeeeeeeeeeeeeeeeeeee   muy importanteeeeeeeeeeeeeeeee
-    //    });
-    //    
-    //  }
-    //  console.log(newAppointmentParaCrear)
-    //  const newAppointmentsCreados = await this.appointmentService.createAppointment(newAppointmentParaCrear);
-    //  this.workday[0].appointment = await this.workday[0].appointment.concat(newAppointmentsCreados);
-    // console.log('newAppointmentsCreados', this.workday[0]);
-    //}
 
   }
   
