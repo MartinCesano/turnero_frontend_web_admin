@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +16,7 @@ export class SidebarComponent {
     this.activeLink = this.router.url; // Inicialmente establecemos el enlace activo a la ruta actual
   }
 
-  activarSidebar() {
+  toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     if (sidebar) {
       sidebar.classList.toggle('show');

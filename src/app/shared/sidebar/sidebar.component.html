@@ -1,10 +1,10 @@
-<aside id="sidebar" class="m-3 show bg-dark text-white fixed top-0 left-0 bottom-0 z-50 p-4 transition-transform translate-x-0">
+<aside id="sidebar" class="bg-dark text-white fixed top-0 left-0 bottom-0 z-50 p-4 transition-transform transform -translate-x-full">
   <div class="border-bottom mb-3 pb-3">
     <a class="d-flex align-items-center gap-3 py-3" href="#">
       <i class="bi bi-person-fill-lock fs-3"></i>
       <p class="m-0 font-weight-bold">Administración</p>
     </a>
-    <button (click)="activarSidebar()" class="btn btn-outline-light position-absolute top-0 right-0 d-xl-none" type="button">
+    <button (click)="toggleSidebar()" class="btn btn-outline-light position-absolute top-0 end-0 d-xl-none" type="button">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg h-5 w-5" viewBox="0 0 16 16">
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
       </svg>
@@ -16,7 +16,7 @@
       <ul class="nav flex-column mb-4">
         <li class="nav-item">
           <a class="nav-link" href="/abm-appointment-time" [ngClass]="{'active': activeLink === '/abm-appointment-time'}" (click)="setActiveLink('/abm-appointment-time')">
-            <button class="btn btn-outline-light w-100 text-left d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-appointment-time'}"  type="button">
+            <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-appointment-time'}" type="button">
               <i class="bi bi-clock fs-3"></i>
               <p class="m-0 font-weight-bold">Horas</p>
             </button>
@@ -24,7 +24,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/abm-schedule" [ngClass]="{'active': activeLink === '/abm-schedule'}" (click)="setActiveLink('/abm-schedule')">
-            <button class="btn btn-outline-light w-100 text-left d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-schedule'}"  type="button">
+            <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-schedule'}" type="button">
               <i class="bi bi-columns-gap fs-3"></i>
               <p class="m-0 font-weight-bold">Horarios</p>
             </button>
@@ -32,7 +32,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/abm-workday" [ngClass]="{'active': activeLink === '/abm-workday'}" (click)="setActiveLink('/abm-workday')">
-            <button class="btn btn-outline-light w-100 text-left d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-workday'}"  type="button">
+            <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-workday'}" type="button">
               <i class="bi bi-calendar3 fs-3"></i>
               <p class="m-0 font-weight-bold">Días</p>
             </button>
@@ -40,8 +40,8 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/abm-customers" [ngClass]="{'active': activeLink === '/abm-customers'}" (click)="setActiveLink('/abm-customers')">
-            <button class="btn btn-outline-light w-100 text-left d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-customers'}"  type="button">
-              <i class="bi bi-people fs-3"></i>              
+            <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-customers'}" type="button">
+              <i class="bi bi-people fs-3"></i>
               <p class="m-0 font-weight-bold">Clientes</p>
             </button>
           </a>
@@ -49,16 +49,16 @@
       </ul>
     </div>
     <div>
-      <ul class="nav flex-column" style="margin-bottom: 6rem;">
+      <ul class="nav flex-column mb-4">
         <li class="nav-item">
           <a class="nav-link" href="/login">
-            <button (click)="signOut()" class="btn btn-outline-light w-100 text-left d-flex align-items-center gap-3" type="button">
+            <button (click)="signOut()" class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" type="button">
               <i class="bi bi-door-open fs-3"></i>
               <p class="m-0 font-weight-bold">Cerrar Sesión</p>
             </button>
           </a>
         </li>
-    </ul>
+      </ul>
     </div>
   </div>
 </aside>

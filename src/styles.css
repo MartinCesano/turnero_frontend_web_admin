@@ -1,37 +1,32 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/*
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~datatables.net-bs5/css/dataTables.bootstrap5.min.css';
-*/
-
-
 body {
   margin: 0;
   padding: 0;
   background-color: #ffffff;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
+body {
+  margin: 0;
+}
 
-
-/*-------------- styles del modal       -----------------------------------------*/
+/*-------------- styles del modal -----------------------------------------*/
 .cdk-overlay-backdrop {
   background-color: rgba(0, 0, 0, 0.757) !important; /* Color de fondo oscuro con opacidad */
 }
+
 /* Opcional: Estiliza el contenedor del diálogo */
 .mat-dialog-container {
-background: white;
-padding: 20px;
-border-radius: 4px;
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
 }
 
 .no-scroll {
-overflow: hidden;
-height: 100%;
+  overflow: hidden;
+  height: 100%;
 }

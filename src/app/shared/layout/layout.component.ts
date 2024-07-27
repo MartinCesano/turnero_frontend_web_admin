@@ -7,11 +7,22 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [ HeaderComponent, FooterComponent, SidebarComponent, RouterOutlet],
+  imports: [HeaderComponent, FooterComponent, SidebarComponent, RouterOutlet],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+  styleUrls: ['./layout.component.css']
 })
-
 export class LayoutComponent {
+  isSidebarOpen: boolean = false;
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    const layoutContainer = document.querySelector('.layout-container');
+    if (layoutContainer) {
+      if (this.isSidebarOpen) {
+        layoutContainer.classList.add('sidebar-open');
+      } else {
+        layoutContainer.classList.remove('sidebar-open');
+      }
+    }
+  }
 }
