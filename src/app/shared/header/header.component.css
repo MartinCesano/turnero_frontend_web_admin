@@ -1,25 +1,13 @@
 /* header.component.css */
-.header {
-  background-color: #f8f9fa;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid #e9ecef;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
 .header-title {
-  flex: 1;
+  font-family: 'Arial', sans-serif;
   font-size: 1.5rem;
-  margin: 0;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
 }
 
-.btn-primary {
-  margin-left: auto;
+.btn-outline-light:hover {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
 }
