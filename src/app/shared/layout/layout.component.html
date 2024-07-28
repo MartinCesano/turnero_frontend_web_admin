@@ -1,4 +1,4 @@
-<div class="layout-container" [class.sidebar-hidden]="!isSidebarOpen">
+<div class="layout-container" [class.sidebar-open]="isSidebarOpen" [class.sidebar-hidden]="!isSidebarOpen">
   <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
   <div class="content-container">
     <app-header (toggleSidebar)="toggleSidebar()"></app-header>

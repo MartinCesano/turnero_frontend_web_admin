@@ -6,7 +6,7 @@
   left: 0;
   background-color: #343a40; /* Color de fondo oscuro */
   color: #fff;
-  transition: transform 0.5s ease-in-out; /* Transición más lenta */
+  transition: transform 0.3s ease-in-out; /* Transición más lenta */
 }
 
 #sidebar.-translate-x-full {
