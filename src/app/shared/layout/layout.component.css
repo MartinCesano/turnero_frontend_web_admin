@@ -5,7 +5,7 @@
 
 app-sidebar {
   width: 250px;
-  transition: margin-left 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .content-container {
@@ -16,11 +16,19 @@ app-sidebar {
 }
 
 .layout-container.sidebar-hidden app-sidebar {
-  margin-left: -250px;
+  transform: translateX(-250px);
 }
 
 .layout-container.sidebar-hidden .content-container {
   margin-left: 0;
+}
+
+.layout-container.sidebar-open app-sidebar {
+  transform: translateX(0);
+}
+
+.layout-container.sidebar-open .content-container {
+  margin-left: 250px;
 }
 
 header {
@@ -30,11 +38,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 main {
   flex: 1;
   padding: 1rem;
+  margin-top: 56px; /* Ajuste para evitar superposición con el header */
 }
 
 footer {
@@ -49,23 +63,36 @@ footer {
     flex-direction: column;
   }
   app-sidebar {
-    width: 100%;
-    display: none;
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-250px);
   }
   .layout-container.sidebar-open app-sidebar {
-    display: block;
-    position: fixed;
-    z-index: 1000;
-    height: 100vh;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-left: 0;
+    transform: translateX(0);
   }
-  .layout-container.sidebar-hidden app-sidebar {
-    display: none;
-    margin-left: -100%;
+  .layout-container.sidebar-hidden .content-container {
+    margin-left: 0;
   }
   .layout-container.sidebar-open .content-container {
-    margin-left: 0;
+    margin-left: 0; /* Evita el margen en dispositivos móviles */
   }
+}
+
+/* Ajustes adicionales para la versión de escritorio */
+@media (min-width: 769px) {
+  .layout-container.sidebar-hidden .content-container {
+    margin-left: 0; /* Asegura que el contenido ocupe todo el ancho cuando el sidebar está cerrado */
+  }
+  .layout-container.sidebar-open .content-container {
+    margin-left: 0px; /* Mantiene el margen cuando el sidebar está abierto */
+  }
+  app-sidebar {
+    position: fixed;
+    width: 0px;
+    height: 100%;
+    z-index: 1000;
+  }
+
 }
