@@ -1,18 +1,19 @@
 .layout-container {
   display: flex;
   min-height: 100vh;
+  transition: margin-left 0.3s ease-in-out; /* Coordinación de transición */
 }
 
 app-sidebar {
   width: 250px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out; /* Coordinación de transición */
 }
 
 .content-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease-in-out; /* Coordinación de transición */
 }
 
 .layout-container.sidebar-hidden app-sidebar {
@@ -81,18 +82,18 @@ footer {
 }
 
 /* Ajustes adicionales para la versión de escritorio */
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .layout-container.sidebar-hidden .content-container {
     margin-left: 0; /* Asegura que el contenido ocupe todo el ancho cuando el sidebar está cerrado */
   }
   .layout-container.sidebar-open .content-container {
-    margin-left: 0px; /* Mantiene el margen cuando el sidebar está abierto */
+    margin-left: 250px; /* Mantiene el margen cuando el sidebar está abierto */
   }
   app-sidebar {
     position: fixed;
-    width: 0px;
+    width: 250px; /* Asegura que el sidebar mantenga su ancho */
     height: 100%;
     z-index: 1000;
+    transform: translateX(-250px); /* Mueve el sidebar fuera de la pantalla cuando está cerrado */
   }
-
 }
