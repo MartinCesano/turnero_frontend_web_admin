@@ -1,7 +1,7 @@
-<div class="layout-container">
-  <app-sidebar></app-sidebar>
+<div class="layout-container" [class.sidebar-hidden]="!isSidebarOpen">
+  <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
   <div class="content-container">
-    <app-header></app-header>
+    <app-header (toggleSidebar)="toggleSidebar()"></app-header>
     <main class="main-content">
       <router-outlet></router-outlet>
     </main>

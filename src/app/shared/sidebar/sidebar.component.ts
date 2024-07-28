@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -10,23 +10,19 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  @Input() isSidebarOpen: boolean = false;
   activeLink: string;
 
   constructor(private router: Router) {
     this.activeLink = this.router.url; // Inicialmente establecemos el enlace activo a la ruta actual
   }
 
-  toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar) {
-      sidebar.classList.toggle('show');
-    } else {
-      console.error("Elemento con ID 'sidebar' no encontrado.");
-    }
-  }
-
   setActiveLink(link: string) {
     this.activeLink = link;
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   signOut() {

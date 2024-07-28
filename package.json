@@ -8,8 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:my-app": "node dist/my-app/server/server.mjs",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/output.css --watch"
+    "serve:ssr:my-app": "node dist/my-app/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -41,7 +40,6 @@
     "moment": "^2.30.1",
     "postcss": "^8.4.39",
     "rxjs": "~7.8.0",
-    "tailwindcss": "^2.2.19",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

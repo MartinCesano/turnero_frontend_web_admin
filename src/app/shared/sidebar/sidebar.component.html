@@ -1,10 +1,12 @@
-<aside id="sidebar" class="bg-dark text-white fixed top-0 left-0 bottom-0 z-50 p-4 transition-transform transform -translate-x-full">
+<aside id="sidebar"
+       class="bg-dark text-white fixed top-0 left-0 bottom-0 z-50 p-4 transition-transform"
+       [ngClass]="{'-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen}">
   <div class="border-bottom mb-3 pb-3">
     <a class="d-flex align-items-center gap-3 py-3" href="#">
       <i class="bi bi-person-fill-lock fs-3"></i>
       <p class="m-0 font-weight-bold">Administración</p>
     </a>
-    <button (click)="toggleSidebar()" class="btn btn-outline-light position-absolute top-0 end-0 d-xl-none" type="button">
+    <button class="btn btn-outline-light position-absolute top-0 end-0 d-xl-none" type="button" (click)="toggleSidebar()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg h-5 w-5" viewBox="0 0 16 16">
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
       </svg>

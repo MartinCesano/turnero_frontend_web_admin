@@ -16,13 +16,5 @@ export class LayoutComponent {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
-    const layoutContainer = document.querySelector('.layout-container');
-    if (layoutContainer) {
-      if (this.isSidebarOpen) {
-        layoutContainer.classList.add('sidebar-open');
-      } else {
-        layoutContainer.classList.remove('sidebar-open');
-      }
-    }
   }
 }
