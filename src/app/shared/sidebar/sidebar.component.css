@@ -1,12 +1,16 @@
 #sidebar {
-  width: 250px; /* Ancho del sidebar */
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  width: 235px; /* Ancho del sidebar */
+  height: 98vh; /* Ocupa toda la altura de la pantalla */
   position: fixed; /* Fijo en la pantalla */
+  margin-left: 1vh;
   top: 0;
   left: 0;
   background-color: #343a40; /* Color de fondo oscuro */
   color: #fff;
   transition: transform 0.3s ease-in-out; /* Transición más lenta */
+  border-radius: 20px;
+  margin-top: 1vh;
+
 }
 
 #sidebar.-translate-x-full {

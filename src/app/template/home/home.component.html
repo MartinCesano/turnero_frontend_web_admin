@@ -1,4 +1,4 @@
-<div class="container mx-auto p-6">
+<div class="container">
   <!-- Header -->
   <div class="mb-6 text-center">
     <h1 class="text-4xl font-bold text-blue-600">Panel de Administración de la Peluquería</h1>
@@ -11,13 +11,18 @@
     <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
       <div class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
         <div>
-          <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">Administración de Turnos</h6>
+          <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">Turnos por dia</h6>
         </div>
       </div>
-      <div class="p-6">
-        <button class="btn btn-primary mb-4 mr-2">Añadir Turno</button>
-        <button class="btn btn-secondary mb-4 mr-2">Ver Turnos</button>
-        <button class="btn btn-warning mb-4 mr-2">Modificar Turno</button>
+      <div class="table-container">
+        <table id="appointmentTable" class="table table-bordered table-hover table-lg display">
+          <thead class="table-primary text-center">
+          </thead>
+          <tbody >
+            <!-- Los datos se cargarán dinámicamente -->
+          </tbody>
+        </table>
+
       </div>
     </div>
 

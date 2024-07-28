@@ -28,8 +28,8 @@ export class AbmScheduleComponent implements OnInit {
   constructor(private scheduleService: ScheduleService, private modalService: ModalService) { }
 
   ngOnInit() {
+    this.modalService.loading("Cargando horas")
     this.getSchedules();
-
   }
 
   async getSchedules() {
@@ -38,6 +38,8 @@ export class AbmScheduleComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching schedules:', error);
     }
+    this.modalService.loadingClose();
+
   }
 
   async addSchedule(schedule: any) {

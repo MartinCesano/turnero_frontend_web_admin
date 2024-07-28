@@ -49,6 +49,16 @@
           </button>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/abm-reservation" [ngClass]="{'active': activeLink === '/abm-reservation'}"
+          (click)="setActiveLink('/abm-reservation')">
+          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3"
+            [ngClass]="{'activeBtn': activeLink === '/abm-reservation'}" type="button">
+            <i class="bi bi-ticket-detailed fs-3"></i>
+            <p class="m-0 font-weight-bold">Reservas</p>
+          </button>
+        </a>
+      </li>
     </ul>
   </div>
   <div>

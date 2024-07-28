@@ -7,6 +7,7 @@ import { WorkdayService } from '../../../core/services/workday.service';
 import { ModalService } from '../modal.service';
 import { AppointmentTimeService } from '../../../core/services/appointment-time.service';
 import { AppointmentService } from '../../../core/services/appointment.service';
+import { StateService } from '../../../core/services/state.service';
 
 @Component({
   selector: 'app-form-workday',
@@ -28,15 +29,24 @@ export class FormWorkdayComponent implements OnInit {
     private workdayService: WorkdayService,
     private modalService: ModalService,
     private appointmentTimeService: AppointmentTimeService,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private stateService: StateService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    await this.getAppointmentTimes();
-    const response = await this.workdayService.getWorkdayByDate(this.data);
-    this.workday = response.data;
-    this.initializeSelectedAppointments();
+    this.modalService.loading("Cargando horarios");
+    try{
+      await this.getAppointmentTimes();
+      const response = await this.workdayService.getWorkdayByDate(this.data);
+      this.workday = response;
+      this.initializeSelectedAppointments();
+    } catch (error) {
+      console.error('Error fetching workday:', error);
+    }
+    this.modalService.loadingClose();
   }
+
+  
 
   selectClosed(event: any) {
     this.workday[0].close = !event.target.checked;
@@ -77,12 +87,13 @@ export class FormWorkdayComponent implements OnInit {
     );
   
     if(appointmentTimesNoCoinciden){
+      const state = await this.stateService.getStateByName("Free");
       let newAppointmentParaCrear:any = [];
       for await (let appointmentsTime of appointmentTimesNoCoinciden) {
         newAppointmentParaCrear.push({
           workday: this.workday[0].id,
           appointmentTimes: appointmentsTime.id,
-          state:2                //esto esta malllllllllllllll, tiene que buscar el estado libre en la base de datos, acomodar luego importanteeeeeeeeeeeeeeeeeeeeeeeee   muy importanteeeeeeeeeeeeeeeee
+          state:parseInt(state.id)       
         });
       }
       await this.appointmentService.createAppointment(newAppointmentParaCrear);
@@ -91,9 +102,6 @@ export class FormWorkdayComponent implements OnInit {
       const arrayAppointmentsNoCoinciden = await appointmentsNoCoinciden.map((appt: any) => appt.id);
       await this.appointmentService.deleteAppointment(arrayAppointmentsNoCoinciden);
     }
-
-
-
   }
   
 
@@ -111,6 +119,16 @@ export class FormWorkdayComponent implements OnInit {
   isAppointmentTimeInSchedule(appointment: any): boolean {
     return this.appointmentTimesSelected.some((appt: any) => appt.id === appointment.id);
   }
+
+  isAppointmentTimeInScheduleDisabled(appointment: any): boolean {
+    const isAppointmentCreate =this.appointmentTimesSelected.some((appt: any) => appt.id === appointment.id);
+    const isAppointmentStateResered = this.workday[0].appointment.some((appt: any) => appt.appointmentTimes.id === appointment.id && appt.state.name == "Reserved");
+    if(isAppointmentCreate && isAppointmentStateResered){
+    return true;
+    }
+    return false
+  }
+
 
   selectAppointmentTime(event: any, appointmentTime: any) {
     if (event.target.checked) {

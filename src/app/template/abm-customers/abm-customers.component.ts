@@ -41,6 +41,7 @@ export class AbmCustomersComponent implements OnInit {
         searching: true,
         ordering: true,
         paging: true,
+        info: true,
         data: this.customers.map((customer, index) => [
           index + 1,
           customer.document,
@@ -48,12 +49,18 @@ export class AbmCustomersComponent implements OnInit {
           customer.lastname,
           customer.phone,
           `
-          <button class="btn btn-outline-success btn-sm rounded me-2 edit-customer" data-customer='${JSON.stringify(customer)}' aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button class="btn btn-outline-danger btn-sm rounded delete-customer" type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-customer='${JSON.stringify(customer)}' aria-label="Delete">
-            <i class="bi bi-trash"></i>
-          </button>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-primary btn-sm rounded reservation-customer" type="button"  data-customer='${JSON.stringify(customer)}'>
+              <i class="bi bi-ticket-detailed"></i>
+            </button>
+            <button class="btn btn-outline-success btn-sm rounded edit-customer" data-customer='${JSON.stringify(customer)}' aria-label="Edit">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-outline-danger btn-sm rounded delete-customer" type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-customer='${JSON.stringify(customer)}' aria-label="Delete">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+
           `
         ]),
         columns: [
@@ -76,7 +83,17 @@ export class AbmCustomersComponent implements OnInit {
         const customer = JSON.parse((event.currentTarget as HTMLElement).getAttribute('data-customer')!);
         this.selectedCustomer = customer;
       });
+
+      $(document).on('click', '.reservation-customer', (event) => {
+        const customer = JSON.parse((event.currentTarget as HTMLElement).getAttribute('data-customer')!);
+        this.reservationCustomer(customer);
+      });
+
     }
+  }
+
+  reservationCustomer(customer: any){
+    // Implementa la lógica para reservar un turno
   }
 
   editCustomer(customer: any) {
@@ -89,6 +106,8 @@ export class AbmCustomersComponent implements OnInit {
     // Implementa la lógica para crear un cliente
     this.modalService.formCustomer(null);
   }
+
+
 
   async deleteCustomer() {
     // Implementa la lógica para eliminar un cliente

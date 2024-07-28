@@ -8,33 +8,14 @@
         </button>
       </div>
       <div class="table-container">
-        <table class="table table-bordered table-hover table-lg">
+        <table id="appointmentTable" class="table table-bordered table-hover table-lg display">
           <thead class="table-primary text-center">
             <tr>
-              <th scope="col" class="fw-bold">#</th>
-              <th scope="col">Inicia</th>
-              <th scope="col">Finaliza</th>
-              <th scope="col">Acciones</th>
+
             </tr>
           </thead>
-          <tbody class="text-center">
-            <tr *ngFor="let appointment of appointmentTimes; let i = index">
-              <td class="fw-bold">{{ i + 1 }}</td>
-              <td>
-                <button class="btn btn-primary btn-sm">{{ appointment.startTime }}</button>
-              </td>
-              <td>
-                <button class="btn btn-primary btn-sm">{{ appointment.endTime }}</button>
-              </td>
-              <td class="action-buttons">
-                <button (click)="editAppointmentTime(appointment)" class="btn btn-outline-success btn-sm rounded me-2" aria-label="Edit">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button (click)="confirmDelete(appointment)" class="btn btn-outline-danger btn-sm rounded" type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" aria-label="Delete">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </td>
-            </tr>
+          <tbody >
+            <!-- Los datos se cargarán dinámicamente -->
           </tbody>
         </table>
       </div>

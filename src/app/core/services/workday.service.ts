@@ -59,13 +59,14 @@ export class WorkdayService {
       throw new HttpErrorResponse({ error });
     }
   }
-  getWorkdayByDate(date: string): any {
+  async getWorkdayByDate(date: string): Promise<any> {
     try {
-      return axios.get(`${backendUrl}/workday/${date}`,{
+      const response = await axios.get(`${backendUrl}/workday/${date}`,{
         headers: {
           Authorization: `Bearer ${this.getAccessToken()}`
         }
       });
+      return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
