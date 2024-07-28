@@ -1,41 +1,49 @@
 <aside id="sidebar"
-       class="bg-dark text-white fixed top-0 left-0 bottom-0 z-50 p-4 transition-transform d-flex flex-column justify-content-between"
-       [ngClass]="{'-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen}">
+  class="bg-dark text-white fixed top-0 left-0 bottom-0 z-50 p-4 transition-transform d-flex flex-column justify-content-between"
+  [ngClass]="{'-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen}">
   <div>
-    <div class="border-bottom mb-3 pb-3">
-      <a class="d-flex align-items-center gap-3 py-3" href="#">
+    <div class="border-bottom mb-3 pb-3 text-white p-3 ">
+      <a class="d-flex align-items-center gap-3 py-2 text-white text-decoration-none" href="#">
         <i class="bi bi-person-fill-lock fs-3"></i>
-        <p class="m-0 font-weight-bold">Administración</p>
+        <p class="m-0 fw-bold">Administración</p>
       </a>
     </div>
     <ul class="nav flex-column mb-4">
       <li class="nav-item">
-        <a class="nav-link" href="/abm-appointment-time" [ngClass]="{'active': activeLink === '/abm-appointment-time'}" (click)="setActiveLink('/abm-appointment-time')">
-          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-appointment-time'}" type="button">
+        <a class="nav-link" href="/abm-appointment-time" [ngClass]="{'active': activeLink === '/abm-appointment-time'}"
+          (click)="setActiveLink('/abm-appointment-time')">
+          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3"
+            [ngClass]="{'activeBtn': activeLink === '/abm-appointment-time'}" type="button">
             <i class="bi bi-clock fs-3"></i>
             <p class="m-0 font-weight-bold">Horas</p>
           </button>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/abm-schedule" [ngClass]="{'active': activeLink === '/abm-schedule'}" (click)="setActiveLink('/abm-schedule')">
-          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-schedule'}" type="button">
+        <a class="nav-link" href="/abm-schedule" [ngClass]="{'active': activeLink === '/abm-schedule'}"
+          (click)="setActiveLink('/abm-schedule')">
+          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3"
+            [ngClass]="{'activeBtn': activeLink === '/abm-schedule'}" type="button">
             <i class="bi bi-columns-gap fs-3"></i>
             <p class="m-0 font-weight-bold">Horarios</p>
           </button>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/abm-workday" [ngClass]="{'active': activeLink === '/abm-workday'}" (click)="setActiveLink('/abm-workday')">
-          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-workday'}" type="button">
+        <a class="nav-link" href="/abm-workday" [ngClass]="{'active': activeLink === '/abm-workday'}"
+          (click)="setActiveLink('/abm-workday')">
+          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3"
+            [ngClass]="{'activeBtn': activeLink === '/abm-workday'}" type="button">
             <i class="bi bi-calendar3 fs-3"></i>
             <p class="m-0 font-weight-bold">Días</p>
           </button>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/abm-customers" [ngClass]="{'active': activeLink === '/abm-customers'}" (click)="setActiveLink('/abm-customers')">
-          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" [ngClass]="{'activeBtn': activeLink === '/abm-customers'}" type="button">
+        <a class="nav-link" href="/abm-customers" [ngClass]="{'active': activeLink === '/abm-customers'}"
+          (click)="setActiveLink('/abm-customers')">
+          <button class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3"
+            [ngClass]="{'activeBtn': activeLink === '/abm-customers'}" type="button">
             <i class="bi bi-people fs-3"></i>
             <p class="m-0 font-weight-bold">Clientes</p>
           </button>
@@ -47,7 +55,8 @@
     <ul class="nav flex-column mb-4">
       <li class="nav-item">
         <a class="nav-link" href="/login">
-          <button (click)="signOut()" class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3" type="button">
+          <button (click)="signOut()" class="btn btn-outline-light w-100 text-start d-flex align-items-center gap-3"
+            type="button">
             <i class="bi bi-door-open fs-3"></i>
             <p class="m-0 font-weight-bold">Cerrar Sesión</p>
           </button>
