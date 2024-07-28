@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  @Input() isSidebarOpen: boolean = false;
+  @Input() isSidebarOpen: boolean = true; // Cambiado para que esté abierto por defecto
   activeLink: string;
 
   constructor(private router: Router) {
@@ -19,10 +19,6 @@ export class SidebarComponent {
 
   setActiveLink(link: string) {
     this.activeLink = link;
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   signOut() {
