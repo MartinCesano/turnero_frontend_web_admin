@@ -32,14 +32,20 @@ export class AbmScheduleComponent implements OnInit {
     this.getSchedules();
   }
 
+
   async getSchedules() {
     try {
-      this.schedules = await this.scheduleService.getSchedules();
+      const schedules = await this.scheduleService.getSchedules();
+      // Ordena los appointmentTimes dentro de cada schedule
+      schedules.forEach((schedule: Schedule) => {
+        schedule.appointmentTimes.sort((a: AppointmentTime, b: AppointmentTime) => a.startTime.localeCompare(b.startTime));
+      });
+      // Ordena los schedules por nombre
+      this.schedules = schedules.sort((a: Schedule, b: Schedule) => a.name.localeCompare(b.name));
     } catch (error) {
       console.error('Error fetching schedules:', error);
     }
     this.modalService.loadingClose();
-
   }
 
   async addSchedule(schedule: any) {

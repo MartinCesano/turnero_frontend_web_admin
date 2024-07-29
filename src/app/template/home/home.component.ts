@@ -25,14 +25,15 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.modalService.loading("cargando Turnos");
     try {
-      this.workday = await this.workdayService.getWorkdayByDate("2024-08-1");
+      const currentDate = new Date().toISOString().split('T')[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
+      this.workday = await this.workdayService.getWorkdayByDate(currentDate);
 
       this.initializeDataTable();
     } catch (error) {
       console.error(error);
     }
     this.modalService.loadingClose();
-  }
+}
 
 
 

@@ -1,8 +1,10 @@
+<h1 class="display-6 mb-3">Horarios</h1>
+<button (click)="addSchedule(null)" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Crear
+  Horario</button>
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="display-6 mb-3">Horarios</h1>
-      <button (click)="addSchedule(null)" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Crear Horario</button>
+
       <div class="row">
         <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
           <div class="relative flex flex-col bg-clip-border rounded-xl bg-light p-4 shadow-sm overflow-hidden">

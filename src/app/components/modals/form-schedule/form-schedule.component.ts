@@ -7,6 +7,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ScheduleService } from '../../../core/services/schedule.service';
 
+export interface AppointmentTime {
+  id: number;
+  startTime: string; // Ajusta el tipo según sea necesario, por ejemplo, Date
+}
 
 @Component({
   selector: 'app-form-schedule',
@@ -35,8 +39,9 @@ export class FormScheduleComponent {
 
   async getAppointmentTimes() {
     try {
-      this.appointmentTimes = await this.appointmentTimeService.getAppointmentTimes();
-      this.appointmentTimesForUpdate = this.data.appointmentTimes.slice() //crea una copia del array
+      const appointmentTimes = await this.appointmentTimeService.getAppointmentTimes();
+      this.appointmentTimes = appointmentTimes.sort((a: AppointmentTime, b: AppointmentTime) => a.startTime.localeCompare(b.startTime));
+      this.appointmentTimesForUpdate = this.data.appointmentTimes.slice().sort((a: AppointmentTime, b: AppointmentTime) => a.startTime.localeCompare(b.startTime)); // crea una copia del array ordenada
       this.name = this.data.name.slice();
     } catch (error) {
       console.error('Error fetching appointment times:', error);
