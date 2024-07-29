@@ -1,51 +1,49 @@
-<div class="container m-0 p-0">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="display-6 mb-4">Clientes</h1>
-      <div class="mb-4">
-        <button class="btn btn-primary btn-lg" (click)="createCustomer()">
-          <i class="bi bi-person-add"></i> Crear cliente
-        </button>
+<div class="row mb-4 mx-3">
+  <div class="col-lg-6">
+    <h1 class="display-6 mb-0">Clientes</h1>
+  </div>
+  <div class="col-lg-6 text-end">
+    <button class="btn btn-primary btn-lg" (click)="createCustomer()">
+      <i class="bi bi-person-add"></i> Crear cliente
+    </button>
+  </div>
+</div>
+
+<div class="container my-4">
+  <div class="table-container">
+    <table id="customersTable" class="table table-bordered table-hover table-lg">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>#</th>
+          <th>Documento</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Teléfono</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los datos se cargarán dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal para Confirmar Eliminación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModal">Eliminar Cliente</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="table-container">
-        <table id="customersTable" class="table table-bordered table-hover table-lg display">
-          <thead class="table-primary text-center">
-            <tr>
-              <th>#</th>
-              <th>Documento</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Telefono</th>
-              <th>Accion</th>
-            </tr>
-          </thead>
-          <tbody >
-            <!-- Los datos se cargarán dinámicamente -->
-          </tbody>
-        </table>
+      <div class="modal-body">
+        ¿Está seguro de que desea eliminar el cliente {{selectedCustomer.name}} {{selectedCustomer.lastname}}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button (click)="deleteCustomer()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
       </div>
     </div>
   </div>
 </div>
-
-
-<!-- Modal -->
-  
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="deleteModal">Eliminar Cliente</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ¿Está seguro de que desea eliminar el cliente {{selectedCustomer.name}} {{selectedCustomer.lastname}}?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button (click)="deleteCustomer()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  

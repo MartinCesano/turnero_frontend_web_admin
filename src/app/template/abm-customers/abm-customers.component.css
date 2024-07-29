@@ -1,110 +1,49 @@
 .table-container {
-    max-height: 500px; /* Ajusta la altura según tus necesidades */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    border: 2px solid #007bff; /* Borde azul alrededor del contenedor */
-    border-radius: 0.5rem; /* Bordes redondeados para el contenedor */
-  }
-  
-  .table-bordered {
-    border: 2px solid #007bff; /* Color de borde azul */
-  }
-  
-  .table-bordered th, .table-bordered td {
-    border: 1px solid #007bff; /* Borde de celdas azul */
-  }
-  
-  .table-bordered .action-buttons td {
-    border: none; /* Elimina el borde interno de las celdas de acciones */
-  }
-  
-  .table-primary {
-    background-color: #e9ecef; /* Fondo de encabezado de la tabla */
-  }
-  
-  .table-hover tbody tr:hover {
-    background-color: #f8f9fa; /* Color de fondo al pasar el mouse */
-  }
-  
-  .table-lg {
-    font-size: 1.25rem; /* Tamaño de fuente más grande para la tabla */
-  }
-  
-  .btn-lg {
-    font-size: 1.25rem; /* Tamaño de fuente más grande para los botones */
-    padding: 0.5rem 1rem; /* Aumenta el tamaño del botón */
-  }
-  
-  .btn-sm {
-    font-size: 0.875rem; /* Tamaño de fuente más pequeño para los botones */
-    padding: 0.25rem 0.5rem; /* Ajusta el tamaño del botón */
-  }
-  
-  .action-buttons {
-    display: flex;
-    justify-content: center; /* Centra los botones horizontalmente */
-    gap: 0.5rem; /* Espacio entre los botones */
-  }
-  
-  @media (max-width: 576px) {
-    .action-buttons {
-      flex-direction: column; /* Dispone los botones en columna en pantallas pequeñas */
-      gap: 0.25rem; /* Reduce el espacio entre los botones */
-    }
-  }
-  
+  max-height: 500px; /* Ajusta la altura según tus necesidades */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  border: 2px solid #007bff; /* Borde azul alrededor del contenedor */
+  border-radius: 0.5rem; /* Bordes redondeados para el contenedor */
+}
 
+.table-bordered {
+  border: 2px solid #007bff; /* Color de borde azul */
+}
 
-  .table-container {
-    max-height: 500px; /* Ajusta la altura según tus necesidades */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    border: 2px solid #007bff; /* Borde azul alrededor del contenedor */
-    border-radius: 0.5rem; /* Bordes redondeados para el contenedor */
-  }
-  
-  .table-bordered {
-    border: 2px solid #007bff; /* Color de borde azul */
-  }
-  
-  .table-bordered th, .table-bordered td {
-    border: 1px solid #007bff; /* Borde de celdas azul */
-  }
-  
-  .table-bordered .action-buttons td {
-    border: none; /* Elimina el borde interno de las celdas de acciones */
-  }
-  
-  .table-primary {
-    background-color: #e9ecef; /* Fondo de encabezado de la tabla */
-  }
-  
-  .table-hover tbody tr:hover {
-    background-color: #f8f9fa; /* Color de fondo al pasar el mouse */
-  }
-  
-  .table-lg {
-    font-size: 1.25rem; /* Tamaño de fuente más grande para la tabla */
-  }
-  
-  .btn-lg {
-    font-size: 1.25rem; /* Tamaño de fuente más grande para los botones */
-    padding: 0.5rem 1rem; /* Aumenta el tamaño del botón */
-  }
-  
-  .btn-sm {
-    font-size: 0.875rem; /* Tamaño de fuente más pequeño para los botones */
-    padding: 0.25rem 0.5rem; /* Ajusta el tamaño del botón */
-  }
-  
+.table-bordered th, .table-bordered td {
+  border: 1px solid #007bff; /* Borde de celdas azul */
+}
+
+.table-primary {
+  background-color: #e9ecef; /* Fondo de encabezado de la tabla */
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa; /* Color de fondo al pasar el mouse */
+}
+
+.table-lg {
+  font-size: 1.25rem; /* Tamaño de fuente más grande para la tabla */
+}
+
+.btn-lg {
+  font-size: 1.25rem; /* Tamaño de fuente más grande para los botones */
+  padding: 0.5rem 1rem; /* Aumenta el tamaño del botón */
+}
+
+.btn-sm {
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño para los botones */
+  padding: 0.25rem 0.5rem; /* Ajusta el tamaño del botón */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center; /* Centra los botones horizontalmente */
+  gap: 0.5rem; /* Espacio entre los botones */
+}
+
+@media (max-width: 576px) {
   .action-buttons {
-    display: flex;
-    justify-content: center; /* Centra los botones horizontalmente */
-    gap: 0.5rem; /* Espacio entre los botones */
+    flex-direction: column; /* Dispone los botones en columna en pantallas pequeñas */
+    gap: 0.25rem; /* Reduce el espacio entre los botones */
   }
-  
-  @media (max-width: 576px) {
-    .action-buttons {
-      flex-direction: column; /* Dispone los botones en columna en pantallas pequeñas */
-      gap: 0.25rem; /* Reduce el espacio entre los botones */
-    }
-  }
-  
+}

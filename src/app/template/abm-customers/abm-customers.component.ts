@@ -20,7 +20,7 @@ export class AbmCustomersComponent implements OnInit {
   constructor(private customerService: CustomerService, private modalService: ModalService) { }
 
   async ngOnInit(): Promise<void> {
-    this.modalService.loading("cargando clientes");
+    this.modalService.loading("Cargando clientes");
     try {
       this.customers = await this.customerService.getCustomers();
       this.initializeDataTable();
@@ -49,8 +49,8 @@ export class AbmCustomersComponent implements OnInit {
           customer.lastname,
           customer.phone,
           `
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary btn-sm rounded reservation-customer" type="button"  data-customer='${JSON.stringify(customer)}'>
+          <div class="action-buttons d-flex justify-content-between">
+            <button class="btn btn-outline-primary btn-sm rounded reservation-customer" type="button" data-customer='${JSON.stringify(customer)}'>
               <i class="bi bi-ticket-detailed"></i>
             </button>
             <button class="btn btn-outline-success btn-sm rounded edit-customer" data-customer='${JSON.stringify(customer)}' aria-label="Edit">
@@ -60,7 +60,6 @@ export class AbmCustomersComponent implements OnInit {
               <i class="bi bi-trash"></i>
             </button>
           </div>
-
           `
         ]),
         columns: [
@@ -69,7 +68,7 @@ export class AbmCustomersComponent implements OnInit {
           { title: "Nombre" },
           { title: "Apellido" },
           { title: "Telefono" },
-          { title: "Accion" }
+          { title: "Acción" }
         ],
       });
 
@@ -88,11 +87,10 @@ export class AbmCustomersComponent implements OnInit {
         const customer = JSON.parse((event.currentTarget as HTMLElement).getAttribute('data-customer')!);
         this.reservationCustomer(customer);
       });
-
     }
   }
 
-  reservationCustomer(customer: any){
+  reservationCustomer(customer: any) {
     // Implementa la lógica para reservar un turno
   }
 
@@ -106,8 +104,6 @@ export class AbmCustomersComponent implements OnInit {
     // Implementa la lógica para crear un cliente
     this.modalService.formCustomer(null);
   }
-
-
 
   async deleteCustomer() {
     // Implementa la lógica para eliminar un cliente

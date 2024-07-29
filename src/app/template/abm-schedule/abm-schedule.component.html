@@ -1,22 +1,30 @@
-<h1 class="display-6 mb-3">Horarios</h1>
-<button (click)="addSchedule(null)" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Crear
-  Horario</button>
-<div class="container">
-  <div class="row">
+  <div class="row mb-4 mx-3">
     <div class="col-lg-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- Título alineado a la izquierda -->
+        <h1 class="display-6 mb-0">Horarios</h1>
+        <!-- Botón alineado a la derecha con espacio flexible entre el título y el botón -->
+        <button (click)="addSchedule(null)" class="btn btn-primary btn-lg ">
+          <i class="bi bi-plus-square"></i> Crear Horario
+        </button>
+      </div>
+    </div>
+  </div>
 
-      <div class="row">
-        <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
-          <div class="relative flex flex-col bg-clip-border rounded-xl bg-light p-4 shadow-sm overflow-hidden">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title mb-3">{{ schedule.name }}</h5>
-              <div class="appointment-times-container mt-3">
-                <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="appointment-time-item">
-                  <span class="badge bg-primary">{{ appointmentTime.startTime }} </span>
-                </div>
+
+  <!-- Contenedor para las tarjetas -->
+  <div class="container mb-4">
+    <div class="row">
+      <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card bg-light shadow-sm p-3">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-3">{{ schedule.name }}</h5>
+            <div class="appointment-times-container mt-3">
+              <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="mb-2">
+                <span class="badge bg-primary">{{ appointmentTime.startTime }}</span>
               </div>
             </div>
-            <div class="btn-container d-flex justify-content-between p-2 mt-auto">
+            <div class="d-flex justify-content-between mt-3">
               <button (click)="addSchedule(schedule)" class="btn btn-outline-success flex-fill me-2">
                 <i class="bi bi-pencil"></i> Editar
               </button>
@@ -29,7 +37,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
   <div class="modal-dialog">
