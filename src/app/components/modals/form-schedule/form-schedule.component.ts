@@ -82,4 +82,8 @@ export class FormScheduleComponent {
     
   }
 
+  cancel() {
+    this.dialogRef.close();
+  }
+
 }

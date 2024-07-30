@@ -7,6 +7,8 @@ import { MessageTypesComponent } from './message-types/message-types.component';
 import { FormCustomerComponent } from './form-customer/form-customer.component';
 import { FormScheduleComponent } from './form-schedule/form-schedule.component';
 import { FormWorkdayComponent } from './form-workday/form-workday.component';
+import { FormReservationComponent } from './form-reservation/form-reservation.component';
+import { ApplyScheduleComponent } from './apply-schedule/apply-schedule.component';
 
 @Injectable({
   providedIn: 'root'
@@ -125,4 +127,62 @@ export class ModalService {
     });
   }
   //endregion
+
+
+
+
+
+//region formReservation
+
+formReservation(schedule: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(FormReservationComponent, {
+        width: '700px',
+        disableClose: false,
+        data: schedule
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+  //endregion
+
+
+  //region ApplyScheduleComponent
+  applySchedule(schedule: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(ApplyScheduleComponent, {
+        width: '700px',
+        disableClose: false,
+        data: schedule
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+
+//endregion
+
+
+
 }
