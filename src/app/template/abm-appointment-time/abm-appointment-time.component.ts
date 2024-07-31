@@ -2,23 +2,23 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppointmentTimeService } from '../../core/services/appointment-time.service';
 import DataTable from 'datatables.net-dt';
-
-// Importaciones del modal
 import { ModalService } from '../../components/modals/modal.service';
+import { IAppointmentTime } from '../../interfaces/appointment-time.interface';
+import { get } from 'jquery';
 
 @Component({
   selector: 'abm-appointment-time',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './abm-appointment-time.component.html',
-  styleUrl: './abm-appointment-time.component.css'
+  styleUrls: ['./abm-appointment-time.component.css']
 })
 export class AbmAppointmentTimeComponent {
-  appointmentTimes: any[] = [];
-  selectedAppointment: any;
+  appointmentTimes: IAppointmentTime[] = [];
+  selectedAppointment?: IAppointmentTime; // Puede ser undefined
   table: any;
 
-  constructor(private appointmentTimeService: AppointmentTimeService, private modalService: ModalService) {}
+  constructor(private appointmentTimeService: AppointmentTimeService, private modalService: ModalService) { }
 
   async ngOnInit(): Promise<void> {
     await this.getAppointmentTimes();
@@ -37,6 +37,7 @@ export class AbmAppointmentTimeComponent {
 
   // Región tabla de turnos
   initializeDataTable(): void {
+    this.getAppointmentTimes();
     const tableElement = document.getElementById('appointmentTable') as HTMLTableElement;
     if (tableElement) {
       if (this.table) {
@@ -47,7 +48,7 @@ export class AbmAppointmentTimeComponent {
         ordering: true,
         paging: false,
         info: false,
-        data: this.appointmentTimes.map((appointmentTime: any) => [
+        data: this.appointmentTimes.map((appointmentTime: IAppointmentTime) => [
           appointmentTime.startTime,
           appointmentTime.endTime,
           `
@@ -61,15 +62,18 @@ export class AbmAppointmentTimeComponent {
         ]),
         columns: [
           { title: "Hora Inicio" },
-          { title: "Hora Fin"},
-          { title: "Acciones"}
+          { title: "Hora Fin" },
+          { title: "Acciones" }
         ],
       });
 
       // Agregar eventos de click para los botones de editar y eliminar
       $(document).on('click', '.edit-appointmentTime', (event) => {
         this.selectedAppointment = JSON.parse((event.currentTarget as HTMLElement).getAttribute('data-customer')!);
-        //this.editAppointmentTime(this.selectedAppointment);
+        // Llama a la función solo si selectedAppointment no es undefined
+        if (this.selectedAppointment) {
+          this.editAppointmentTime(this.selectedAppointment);
+        }
       });
 
       $(document).on('click', '.delete-appointmentTime', (event) => {
@@ -107,48 +111,44 @@ export class AbmAppointmentTimeComponent {
 
       this.appointmentTimes.push(response);
       this.initializeDataTable();
-      
+
     } catch (error) {
       console.error('Error creating appointment time:', error);
     }
   }
 
-  editAppointmentTime(customer: any) {
-    this.selectedAppointment = { ...customer };
-  }
-
   async deleteAppointmentTime() {
     try {
+      // Verificar si selectedAppointment está definido antes de usarlo
       if (this.selectedAppointment) {
         await this.appointmentTimeService.deleteAppointmentTime(this.selectedAppointment.id);
-        this.appointmentTimes = this.appointmentTimes.filter(app => app.id !== this.selectedAppointment.id);
-        // Eliminar la fila de la tabla
-        const element = document.querySelector(`[data-customer='${JSON.stringify(this.selectedAppointment)}']`);
-        if (element) {
-          const closestRow = element.closest('tr');
-          if (closestRow) {
-            this.table.row($(closestRow)).remove().draw();
-          }
-        }
-        this.selectedAppointment = null;
+        this.initializeDataTable();
+        this.selectedAppointment = undefined;
       }
     } catch (error) {
       console.error('Error deleting appointment time:', error);
     }
   }
 
-  async updateAppointmentTime() {
-    try {
-      if (this.selectedAppointment) {
-        await this.appointmentTimeService.updateAppointmentTime(this.selectedAppointment);
-        this.appointmentTimes = this.appointmentTimes.map(app => 
-          app.id === this.selectedAppointment.id ? this.selectedAppointment : app
-        );
-        this.selectedAppointment = null;
-        this.initializeDataTable();
-      }
-    } catch (error) {
-      console.error('Error updating appointment time:', error);
-    }
+  // async updateAppointmentTime() {
+  //   try {
+  //     // Verificar si selectedAppointment está definido antes de usarlo
+  //     if (this.selectedAppointment) {
+  //       await this.appointmentTimeService.updateAppointmentTime(this.selectedAppointment);
+  //       this.appointmentTimes = this.appointmentTimes.map(app =>
+  //         app.id === this.selectedAppointment.id ? this.selectedAppointment : app
+  //       );
+  //       this.selectedAppointment = undefined;
+  //       this.initializeDataTable();
+  //     }
+  //   } catch (error) {
+  //     console.error('Error updating appointment time:', error);
+  //   }
+  // }
+
+  // Método para editar un appointment time
+  editAppointmentTime(appointmentTime: IAppointmentTime) {
+    // Implementa la lógica de edición aquí
+    console.log('Editing appointment time:', appointmentTime);
   }
 }
