@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../../core/services/customer.service';
 import { Router } from '@angular/router';
 import { ModalService } from '../modal.service';
+import { ICustomer } from '../../../interfaces/customer.interface';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +30,7 @@ export class FormCustomerComponent implements OnInit {
   };
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: ICustomer,
     private dialogRef: MatDialogRef<FormCustomerComponent>,
     public dialog: MatDialog,
     private fb: FormBuilder,

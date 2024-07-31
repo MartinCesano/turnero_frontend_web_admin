@@ -6,14 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { WorkdayService } from '../../../core/services/workday.service';
 import { ModalService } from '../modal.service';
+import { ISchedule } from '../../../interfaces/schedule.interface';
+import { IApplySchedule } from '../../../interfaces/workday.interface';
 
-interface ApplyScheduleForm {
-  startDate: Date;
-  endDate: Date;
-  applyDays: {
-    [key: string]: boolean; // Usar índice de tipo string para los días
-  };
-}
 
 @Component({
   selector: 'app-apply-schedule',
@@ -29,7 +24,7 @@ export class ApplyScheduleComponent implements OnInit {
   selectedDays: { [key: string]: boolean } = {};
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: ISchedule,
     private dialogRef: MatDialogRef<ApplyScheduleComponent>,
     public dialog: MatDialog,
     private workdayService:WorkdayService,
@@ -45,17 +40,17 @@ export class ApplyScheduleComponent implements OnInit {
     this.modalService.loading("aplicando los horarios");
 
     // Create the JSON object
-    const schedule = {
+    const applySchedule : IApplySchedule = {
       startDate: this.startDate,
       endDate: this.endDate,
       applyDays: this.daysOfWeek.filter(day => this.selectedDays[day]),
       appointmentTimes: this.data.appointmentTimes
     };
 
-    console.log('Generated JSON:', JSON.stringify(schedule, null, 2));
+    console.log('Generated JSON:', JSON.stringify(applySchedule, null, 2));
     // Implement your form submission logic here, e.g., send the JSON to a server
 
-    const workday = await this.workdayService.applySchedule(schedule);
+    const workday = await this.workdayService.applySchedule(applySchedule);
 
     console.log('workday:', workday);
     this.modalService.loadingClose();

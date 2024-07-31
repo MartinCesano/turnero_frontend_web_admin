@@ -5,7 +5,7 @@
   </div>
   <div class="row align-items-between">
       <label>Abierto:</label>
-      <input class="form-check-input fs-3" type="checkbox" value="true" id="flexCheckDefault" [checked]="!workday.close" (change)="selectClosed($event)">
+    <input class="form-check-input fs-3" type="checkbox" value="true" id="flexCheckDefault" [checked]="selectedWorkday && !selectedWorkday.close" (change)="selectClosed($event)">
   </div>
 
   <div class="row">
