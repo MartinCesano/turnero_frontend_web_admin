@@ -2,7 +2,7 @@
   <div class="col-lg-6">
     <h1 class="display-6 mb-0">Clientes</h1>
   </div>
-  <div class="col-lg-6 text-end">
+  <div class="col-lg-6 text-lg-end">
     <button class="btn btn-primary btn-lg" (click)="createCustomer()">
       <i class="bi bi-person-add"></i> Crear cliente
     </button>
@@ -38,8 +38,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Está seguro de que desea eliminar el cliente {{selectedCustomer.name}} {{selectedCustomer.lastname}}?
-      </div>
+        ¿Está seguro de que desea eliminar el cliente {{selectedCustomer?.name || 'desconocido'}} {{selectedCustomer?.lastname || ''}}?
+      </div>      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button (click)="deleteCustomer()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>

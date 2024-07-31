@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { WorkdayService } from '../../../core/services/workday.service';
+import { ModalService } from '../modal.service';
 
 interface ApplyScheduleForm {
   startDate: Date;
@@ -30,6 +32,8 @@ export class ApplyScheduleComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ApplyScheduleComponent>,
     public dialog: MatDialog,
+    private workdayService:WorkdayService,
+    private modalService:ModalService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +41,9 @@ export class ApplyScheduleComponent implements OnInit {
     this.daysOfWeek.forEach(day => this.selectedDays[day] = false);
   }
 
-  applySchedule(): void {
+  async applySchedule(): Promise<void> {
+    this.modalService.loading("aplicando los horarios");
+
     // Create the JSON object
     const schedule = {
       startDate: this.startDate,
@@ -49,8 +55,13 @@ export class ApplyScheduleComponent implements OnInit {
     console.log('Generated JSON:', JSON.stringify(schedule, null, 2));
     // Implement your form submission logic here, e.g., send the JSON to a server
 
+    const workday = await this.workdayService.applySchedule(schedule);
+
+    console.log('workday:', workday);
+    this.modalService.loadingClose();
     // Close the modal
     this.dialogRef.close();
+    this.modalService.openMenssageTypes({ text: "Horarios aplicados correctamente", subtitle: "Los horarios se han aplicado correctamente", type: "success" });
   }
 
   getDayLabel(day: string): string {

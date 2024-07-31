@@ -14,7 +14,7 @@ import DataTable from 'datatables.net-dt';
 })
 export class HomeComponent implements OnInit {
 
-  workday: any[] = [];
+  workday: any;
   table: any;
 
   constructor(
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
         ordering: true,
         paging: false,
         info: false,
-        data: this.workday[0].appointment.map((appointment: any) => [
+        data: this.workday.appointment.map((appointment: any) => [
           appointment.appointmentTimes.startTime,
           appointment.state.name
         ]),

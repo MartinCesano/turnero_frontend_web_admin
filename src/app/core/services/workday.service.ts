@@ -3,6 +3,7 @@ import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
 import { backendUrl } from './api-environments';
+import { ApplyScheduleDto } from '../../interfaces/workday/apply-schedule.dto';
 
 
 @Injectable({
@@ -41,24 +42,26 @@ export class WorkdayService {
     }
     
 
-
-  getWorkdays(): any {
-    try {
-      return axios.get(`${backendUrl}/workday`,{
-        headers: {
-          Authorization: `Bearer ${this.getAccessToken()}`
-        }
-      });
-    } catch (error) {
-      this.modalService.openMenssageTypes({
-        text: "Error en la obtencion de los dias.",
-        subtitle: (error as any).response.data.message,
-        backendUrl: null,
-        type: "error"
-      })
-      throw new HttpErrorResponse({ error });
+    async getWorkdays(): Promise<any> {
+      try {
+        const response = await axios.get(`${backendUrl}/workday`,{
+          headers: {
+            Authorization: `Bearer ${this.getAccessToken()}`
+          }
+        });
+        return response.data;  // Devuelve solo los datos de la respuesta
+      } catch (error) {
+        this.modalService.openMenssageTypes({
+          text: "Error en la obtencion de los dias.",
+          subtitle: (error as any).response.data.message,
+          backendUrl: null,
+          type: "error"
+        })
+        throw new HttpErrorResponse({ error });
+      }
     }
-  }
+
+    
   async getWorkdayByDate(date: string): Promise<any> {
     try {
       const response = await axios.get(`${backendUrl}/workday/${date}`,{
@@ -77,4 +80,24 @@ export class WorkdayService {
       throw new HttpErrorResponse({ error });
     }
   }
+
+  async applySchedule(schedule: ApplyScheduleDto): Promise<any> {
+    try {
+      const response = await axios.post(`${backendUrl}/workday/applySchedule`,schedule,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      this.modalService.openMenssageTypes({
+        text: "Error en la obtencion de las horas.",
+        subtitle: (error as any).response.data.message,
+        backendUrl: null,
+        type: "error"
+      })
+      throw new HttpErrorResponse({ error });
+    }
+  }
+
 }

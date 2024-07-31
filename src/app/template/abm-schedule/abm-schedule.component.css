@@ -4,12 +4,6 @@
     align-items: center; /* Centra el contenido horizontalmente */
   }
   
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Centra las tarjetas horizontalmente */
-    gap: 15px; /* Espacio entre las tarjetas */
-  }
   
   .col-lg-3, .col-md-4, .col-sm-6 {
     display: flex;

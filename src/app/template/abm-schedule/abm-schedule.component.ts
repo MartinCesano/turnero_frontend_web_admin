@@ -58,5 +58,9 @@ export class AbmScheduleComponent implements OnInit {
     this.getSchedules();
   }
 
+
+  async applySchedule(schedule: any) {
+    this.modalService.applySchedule(schedule);
+  }
   
 }

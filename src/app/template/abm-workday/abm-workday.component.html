@@ -1,34 +1,48 @@
 <!-- Calendar HTML -->
-<div class="calendar text-center bg-dark">
-    <div class="d-flex justify-content-between align-items-center header">
-      <button (click)="previousMonth()" class="nav-button">&larr;</button>
-      <h2>{{ monthYear }}</h2>
-      <button (click)="nextMonth()" class="nav-button">&rarr;</button>
-    </div>
-    <table class="table table-dark table-borderless">
-      <thead>
-        <tr>
-          <th>Dom</th>
-          <th>Lun</th>
-          <th>Mar</th>
-          <th>Mie</th>
-          <th>Jue</th>
-          <th>Vie</th>
-          <th>Sab</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let week of weeks">
-          <td class="td" *ngFor="let workday of week" [class.selected]="canSelectDay(workday)"
-            [class.disabled]="isDisabledDay(workday)" [class.disabledFutureDay]="isBlockedFuruteDay(workday)">
-            <button class="button-none btn-calendar" type="button" data-bs-target="#abmWorkdayModal"
-              data-bs-toggle="modal" 
-              (click)="selectWorkday(workday); $event.preventDefault()">
+<div class="row">
+  <h1>Dias</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="calendar text-center bg-dark">
+      <div class="d-flex justify-content-between align-items-center header">
+        <button (click)="previousMonth()" class="nav-button">&larr;</button>
+        <h2>{{ monthYear }}</h2>
+        <button (click)="nextMonth()" class="nav-button">&rarr;</button>
+      </div>
+      <table class="table table-dark table-borderless">
+        <thead>
+          <tr>
+            <th>Dom</th>
+            <th>Lun</th>
+            <th>Mar</th>
+            <th>Mie</th>
+            <th>Jue</th>
+            <th>Vie</th>
+            <th>Sab</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let week of weeks">
+            <td
+              class="td"
+              *ngFor="let workday of week"
+              [class.close]="isDayClose(workday)"
+              
+            >
+              <button
+                class="button-none btn-calendar"
+                type="button"
+                data-bs-target="#abmWorkdayModal"
+                data-bs-toggle="modal"
+                (click)="selectWorkday(workday); $event.preventDefault()"
+              >
                 {{ workday }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  
+</div>

@@ -1,4 +1,4 @@
-  <div class="row mb-4 mx-3">
+<div class="row mb-4 mx-3">
     <div class="col-lg-12">
       <div class="d-flex justify-content-between align-items-center">
         <!-- Título alineado a la izquierda -->
@@ -25,13 +25,16 @@
               </div>
             </div>
             <div class="d-flex justify-content-between mt-3">
-              <button (click)="addSchedule(schedule)" class="btn btn-outline-success flex-fill me-2">
-                <i class="bi bi-pencil"></i> Editar
-              </button>
-              <button (click)="deleteSchedule(schedule)" class="btn btn-outline-danger flex-fill">
-                <i class="bi bi-trash"></i> Eliminar
-              </button>
-            </div>
+                <button (click)="applySchedule(schedule)" class="btn btn-outline-primary flex-fill me-2">
+                    <i class="bi bi-calendar-check "></i> Aplicar
+                  </button>
+                <button (click)="addSchedule(schedule)" class="btn btn-outline-success flex-fill me-2">
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+                <button (click)="deleteSchedule(schedule)" class="btn btn-outline-danger flex-fill">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </div>
           </div>
         </div>
       </div>
