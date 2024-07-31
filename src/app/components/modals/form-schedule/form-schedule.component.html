@@ -1,34 +1,51 @@
-<div class="container text-dark p-3">
-    <h3 class="display-6 mb-3 text-center">Guardar Horario</h3>
-    <div class="row m-3">
-        <label  for="idInputNombre" class="aria-label">Nombre:</label>
-        <input id="idInputNombre" class="form-control" [(ngModel)]="name">
-        </div>
-    <table class="table table-bordered table-hover table-lg">
-        <thead class="table-primary text-center">
-          <tr>
-            <th scope="col" class="fw-bold">Acciones</th>
-            <th scope="col">Inicia</th>
-            <th scope="col">Finaliza</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          <tr *ngFor="let appointment of appointmentTimes  ;">
-            <td>
-                <input class="form-check-input fs-3" type="checkbox" value="true" id="flexCheckDefault" [checked]="isAppointmentTimeInSchedule(appointment)" (change)="selectAppointmentTime($event, appointment)">
-            </td>
-            <td>
-              <button class="btn btn-primary btn-sm">{{ appointment.startTime }}</button>
-            </td>
-            <td>
-              <button class="btn btn-primary btn-sm">{{ appointment.endTime }}</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    <div class="row">
-        <div class="col-12 d-flex justify-content-left">
-            <button class="btn btn-primary ms-3" (click)="saveSchedule()">Listo</button>
-        </div>
+<div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-content">
+    <div class="modal-header justify-content-center">
+      <h5 class="modal-title mt-4">Guardar Horario</h5>
     </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row mb-3">
+          <label for="idInputNombre" class="col-form-label">Nombre:</label>
+          <div class="col">
+            <input id="idInputNombre" class="form-control" [(ngModel)]="name">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <div class="table-responsive" style="max-height: 50vh; overflow-y: auto;">
+              <table class="table table-bordered table-hover">
+                <thead class="table-primary text-center">
+                  <tr>
+                    <th scope="col" class="fw-bold">Acciones</th>
+                    <th scope="col">Inicia</th>
+                    <th scope="col">Finaliza</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let appointment of appointmentTimes;">
+                    <td>
+                      <input class="form-check-input fs-3" type="checkbox" value="true" id="flexCheckDefault" [checked]="isAppointmentTimeInSchedule(appointment)" (change)="selectAppointmentTime($event, appointment)">
+                    </td>
+                    <td>
+                      <button class="btn btn-primary btn-sm">{{ appointment.startTime }}</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary btn-sm">{{ appointment.endTime }}</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4 mb-3">
+          <div class="col d-flex justify-content-end">
+            <button class="btn btn-primary me-2" (click)="saveSchedule()">Listo</button>
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

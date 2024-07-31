@@ -109,4 +109,9 @@ export class FormCustomerComponent implements OnInit {
     // Extrae el número de teléfono de la cadena de teléfono
     return phone.substring(6); // Desde la posición 7 hasta el final
   }
+
+  cancel() {
+    this.dialogRef.close();
+  }
+
 }
