@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { LoginI, RegisterI, TokenI } from '../../interfaces/token';
+import { LoginI, RegisterI, TokenI } from '../../interfaces/token.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { timer } from 'rxjs';
 import moment from 'moment';
