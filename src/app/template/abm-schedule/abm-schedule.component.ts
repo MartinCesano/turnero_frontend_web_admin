@@ -2,17 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../../core/services/schedule.service';
 import { ModalService } from '../../components/modals/modal.service';
-
-export interface AppointmentTime {
-  id: number;
-  startTime: string; // Ajusta el tipo según sea necesario, por ejemplo, Date
-}
-
-export interface Schedule {
-  id: number;
-  name: string;
-  appointmentTimes: AppointmentTime[];
-}
+import { IAppointmentTime } from '../../interfaces/appointment-time.interface';
+import { ISchedule } from '../../interfaces/schedule.interface';
 
 @Component({
   selector: 'app-abm-schedule',
@@ -22,8 +13,9 @@ export interface Schedule {
   styleUrls: ['./abm-schedule.component.css'] // Asegúrate de usar `styleUrls` en plural
 })
 export class AbmScheduleComponent implements OnInit {
-  schedules: any[] = []; // Inicializa como un array vacío
-  selectedSchedule: any;
+  
+  schedules: ISchedule[] = []; // Inicializa como un array vacío
+  selectedSchedule?: ISchedule;
 
   constructor(private scheduleService: ScheduleService, private modalService: ModalService) { }
 
@@ -37,26 +29,30 @@ export class AbmScheduleComponent implements OnInit {
     try {
       const schedules = await this.scheduleService.getSchedules();
       // Ordena los appointmentTimes dentro de cada schedule
-      schedules.forEach((schedule: Schedule) => {
-        schedule.appointmentTimes.sort((a: AppointmentTime, b: AppointmentTime) => a.startTime.localeCompare(b.startTime));
+      schedules.forEach((schedule: ISchedule) => {
+        // Verifica si appointmentTimes existe y es un array
+        if (schedule.appointmentTimes) {
+          schedule.appointmentTimes.sort((a: IAppointmentTime, b: IAppointmentTime) => a.startTime.localeCompare(b.startTime));
+        }
       });
+
       // Ordena los schedules por nombre
-      this.schedules = schedules.sort((a: Schedule, b: Schedule) => a.name.localeCompare(b.name));
+      this.schedules = schedules.sort((a: ISchedule, b: ISchedule) => a.name.localeCompare(b.name));
     } catch (error) {
       console.error('Error fetching schedules:', error);
     }
     this.modalService.loadingClose();
   }
 
-  async addSchedule(schedule: any) {
+  async addSchedule(schedule: ISchedule) {
     await this.modalService.formSchedule(schedule);
     this.getSchedules();
-}
+  }
 
-  async deleteSchedule(schedule: any) {
+  async deleteSchedule(schedule: ISchedule) {
     await this.scheduleService.deleteSchedule(schedule.id)
     this.getSchedules();
   }
 
-  
+
 }
