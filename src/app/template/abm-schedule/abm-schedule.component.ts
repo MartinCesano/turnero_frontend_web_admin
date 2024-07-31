@@ -44,7 +44,7 @@ export class AbmScheduleComponent implements OnInit {
     this.modalService.loadingClose();
   }
 
-  async addSchedule(schedule: ISchedule) {
+  async addSchedule(schedule: ISchedule | null) {
     await this.modalService.formSchedule(schedule);
     this.getSchedules();
   }
