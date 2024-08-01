@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { WorkdayService } from '../../core/services/workday.service';
 import { ModalService } from '../../components/modals/modal.service';
+import { IWorkday } from '../../interfaces/workday.interface';
+
 @Component({
   selector: 'app-abm-workday',
   standalone: true,
@@ -194,7 +196,7 @@ export class AbmWorkdayComponent implements OnInit {
     //verifico si el dia esta disponible
     this.arrayDaysAvaible = [];
     if (this.avaibleSchedule) {
-      for (let day of this.avaibleSchedule) {
+      for (const day of this.avaibleSchedule) {
         this.arrayDaysAvaible.push(parseInt(day.day));
       }
     }
@@ -203,7 +205,7 @@ export class AbmWorkdayComponent implements OnInit {
   findDayId(day: number | null) {
     //busca el id del dia
     if (this.avaibleSchedule) {
-      for (let dayAvaible of this.avaibleSchedule) {
+      for (const dayAvaible of this.avaibleSchedule) {
         if (parseInt(dayAvaible.day) == day) {
           return dayAvaible.id;
         }
@@ -230,28 +232,26 @@ export class AbmWorkdayComponent implements OnInit {
 
   // Aquí debes tener un método para obtener los horarios del workday
 
-
-  isDayClose(day:any):boolean{
+  isDayClose(day: number): boolean {
     //ejemplo de entrada  5
-    if(day === null){
-      return false
+    if (day === null) {
+      return false;
     }
-    const date = this.formatDate(this.currentYear,this.currentMonth, day.toString()) 
-    const workday = this.findByDate(date)
-    console.log(workday)
+    const date = this.formatDate(this.currentYear, this.currentMonth, day);
+    const workday = this.findByDate(date);
+    console.log(workday);
 
-    return(false)
+    return false;
   }
 
-
-   findByDate(date:string):Promise<any>{
+  findByDate(date: string): Promise<any> {
     //busca el dia por la fecha
-    
-    const workday = this.workdays.find((day) => day.date.split("T")[0] === date)
-    return workday
 
+    const workday = this.workdays.find(
+      (day) => day.date.split('T')[0] === date
+    );
+    return workday;
   }
-
 
   // #endregion funciones de logica
 

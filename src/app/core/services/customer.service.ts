@@ -3,6 +3,7 @@ import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { backendUrl } from './api-environments';
 import { ModalService } from '../../components/modals/modal.service';
+import { ICustomer } from '../../interfaces/customer.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class CustomerService {
       return null;
     }
 
-  async getCustomers(): Promise<any> {
+  async getCustomers(): Promise<ICustomer[]> {
     try {
       const response = await axios.get(`${backendUrl}/customer`,{
         headers: {
@@ -40,7 +41,7 @@ export class CustomerService {
     }
   }
 
-  async createCustomer(customer: any): Promise<any> {
+  async createCustomer(customer: ICustomer): Promise<ICustomer> {
     try{
         const response = await axios.post(`${backendUrl}/customer/register`, customer);
         return response.data;
@@ -55,7 +56,7 @@ export class CustomerService {
     }
 }
 
-  async deleteCustomer(document: any): Promise<any> {
+  async deleteCustomer(document: string): Promise<ICustomer> {
     try {
       const response = await axios.delete(`${backendUrl}/customer/${document}`,{
         headers: {
@@ -76,7 +77,7 @@ export class CustomerService {
 
 
 
-  async updateCustomer(document: number, customer: any): Promise<any> {
+  async updateCustomer(document: number, customer: ICustomer): Promise<ICustomer> {
     try {
       const response = await axios.put(`${backendUrl}/customer/${document}`,customer,{
         headers: {

@@ -6,7 +6,7 @@ export interface ICustomer {
   name: string;
   lastname: string;
   phone: number;
-  birthdate?: string;
+  birthdate: string;
   blacklisted: boolean;
   reservation: IReservation[];
 }

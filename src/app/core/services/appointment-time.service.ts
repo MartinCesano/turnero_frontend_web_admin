@@ -3,6 +3,9 @@ import { backendUrl } from './api-environments';
 import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
+import { IAppointmentTime } from '../../interfaces/appointment-time.interface';
+import { IAppointmentTimeNew } from '../../interfaces/appointment-time.interface';
+
 
 
 
@@ -24,7 +27,7 @@ export class AppointmentTimeService {
     }
 
 
-  async getAppointmentTimes(): Promise<any> {
+  async getAppointmentTimes(): Promise<IAppointmentTime[]> {
     try {
       const response = await axios.get(`${backendUrl}/appointment-time`, {
         headers: {
@@ -43,7 +46,7 @@ export class AppointmentTimeService {
     }
   }
 
-  async createAppointmentTime(appointmentTime: any): Promise<any> {
+  async createAppointmentTime(appointmentTime: IAppointmentTimeNew): Promise<IAppointmentTime> {
     try {
       const response = await axios.post(`${backendUrl}/appointment-time/`, appointmentTime,{
         headers: {
@@ -62,7 +65,7 @@ export class AppointmentTimeService {
     }
   }
 
-  async updateAppointmentTime(appointmentTime: any): Promise<any> {
+  async updateAppointmentTime(appointmentTime: IAppointmentTime): Promise<IAppointmentTime> {
     try {
       const response = await axios.put(`${backendUrl}/appointment-time/${appointmentTime.id}`, appointmentTime,{
         headers: {
@@ -81,7 +84,7 @@ export class AppointmentTimeService {
     }
   }
 
-  async deleteAppointmentTime(id: number): Promise<any> {
+  async deleteAppointmentTime(id: number): Promise<IAppointmentTime> {
     try {
       const response = await axios.delete(`${backendUrl}/appointment-time/${id}`,
         {

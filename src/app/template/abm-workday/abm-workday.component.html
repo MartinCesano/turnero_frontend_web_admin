@@ -27,7 +27,7 @@
             <td
               class="td"
               *ngFor="let workday of week"
-              [class.close]="isDayClose(workday)"
+              [class.close]="isDayClose(workday ?? 0)"
               
             >
               <button

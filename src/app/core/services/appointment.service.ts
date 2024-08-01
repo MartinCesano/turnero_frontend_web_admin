@@ -3,6 +3,9 @@ import { backendUrl } from './api-environments';
 import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
+import { IAppointment } from '../../interfaces/appointment.interface';
+import { IAppointmentNew } from '../../interfaces/appointment.interface';
+import { IState } from '../../interfaces/state.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +25,7 @@ export class AppointmentService {
     }
 
 
-async getAppointments(): Promise<any> {
+async getAppointments(): Promise<IAppointment> {
   try {
     const response = await axios.get(`${backendUrl}/appointment`, {
       headers: {
@@ -42,7 +45,7 @@ async getAppointments(): Promise<any> {
 }
 
 
-async createAppointment(appointment: any): Promise<any> {
+async createAppointment(appointment: IAppointmentNew[] ): Promise<IAppointment> {
   try {
     const response = await axios.post(`${backendUrl}/appointment`, appointment, {
       headers: {
@@ -61,7 +64,7 @@ async createAppointment(appointment: any): Promise<any> {
   }
 }
 
-async deleteAppointment(ids: number[]): Promise<any> {
+async disabledAppointment(ids: number[]): Promise<IAppointment> {
   try {
     const response = await axios.delete(`${backendUrl}/appointment`, {
       data: {"ids":ids},
@@ -79,6 +82,25 @@ async deleteAppointment(ids: number[]): Promise<any> {
   }
 }
 
+
+async changeStatusMany(appointments: IAppointment[], state: IState): Promise<IAppointment> {
+  try {
+    const response = await axios.post(`${backendUrl}/appointment/avaible-appointment`, {appointments, state}, {
+      headers: {
+        Authorization: `Bearer ${this.getAccessToken()}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    this.modalService.openMenssageTypes({
+      text: "Error al cambiar el habilitar turnos.",
+      subtitle: (error as any).response.data.message,
+      url: null,
+      type: "error"
+    })
+    throw new HttpErrorResponse({ error });
+  }
+}
 
 
 }

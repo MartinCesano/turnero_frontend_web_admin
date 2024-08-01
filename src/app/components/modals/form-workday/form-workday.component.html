@@ -26,7 +26,7 @@
                                       </tr>
                                   </thead>
                                   <tbody class="text-center">
-                                      <tr *ngFor="let appointment of appointmentTimes;">
+                                      <tr id="{{appointment.id}}" *ngFor="let appointment of appointmentTimes;">
                                           <td>
                                               <input class="form-check-input fs-3" type="checkbox" value="true" id="flexCheckDefault" [disabled]="isAppointmentTimeInScheduleDisabled(appointment)" [checked]="isAppointmentTimeInSchedule(appointment)" (change)="selectAppointmentTime($event, appointment)">
                                           </td>

@@ -4,6 +4,7 @@ import { IAppointment } from './appointment.interface';
 import { IState } from './state.interface';
 import { ICancellationDetail } from './cancellation-detail.interface';
 import { IDebt } from './debt.interface';
+import { IWorkday } from './workday.interface';
 
 export interface IReservation {
   id: number;
@@ -13,4 +14,5 @@ export interface IReservation {
   state: IState;
   cancellationDetail: ICancellationDetail | null;
   debt: IDebt[];
+  workday: IWorkday;
 }

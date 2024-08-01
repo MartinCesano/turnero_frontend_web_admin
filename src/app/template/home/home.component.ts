@@ -2,19 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from '../../components/modals/modal.service';
 import { WorkdayService } from '../../core/services/workday.service';
-
 import DataTable from 'datatables.net-dt';
-
+import { IWorkday } from '../../interfaces/workday.interface';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']  // Corrige styleUrl a styleUrls
 })
 export class HomeComponent implements OnInit {
 
-  workday: any;
+  workday?: IWorkday;
   table: any;
 
   constructor(
@@ -23,7 +22,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.modalService.loading("cargando Turnos");
+    this.modalService.loading("Cargando Turnos");
     try {
       const currentDate = new Date().toISOString().split('T')[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
       this.workday = await this.workdayService.getWorkdayByDate(currentDate);
@@ -33,14 +32,12 @@ export class HomeComponent implements OnInit {
       console.error(error);
     }
     this.modalService.loadingClose();
-}
-
-
+  }
 
   //region tabla de turnos
   initializeDataTable(): void {
     const tableElement = document.getElementById('appointmentTable') as HTMLTableElement;
-    if (tableElement) {
+    if (tableElement && this.workday?.appointment) {
       if (this.table) {
         this.table.destroy();
       }
@@ -49,9 +46,9 @@ export class HomeComponent implements OnInit {
         ordering: true,
         paging: false,
         info: false,
-        data: this.workday.appointment.map((appointment: any) => [
-          appointment.appointmentTimes.startTime,
-          appointment.state.name
+        data: this.workday.appointment.map((appointment) => [
+          appointment.appointmentTimes?.startTime ?? 'N/A', // Usar el encadenamiento opcional y valor predeterminado
+          appointment.state?.name ?? 'Si estado' // Usar el encadenamiento opcional y valor predeterminado
         ]),
         columns: [
           { title: "Hora" },
@@ -61,9 +58,4 @@ export class HomeComponent implements OnInit {
     }
   }
   //endregion
-
-
-
-  
-
 }

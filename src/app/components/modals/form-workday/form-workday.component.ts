@@ -9,7 +9,7 @@ import { AppointmentService } from '../../../core/services/appointment.service';
 import { StateService } from '../../../core/services/state.service';
 import { IAppointmentTime } from '../../../interfaces/appointment-time.interface';
 import { IWorkday } from '../../../interfaces/workday.interface';
-import { IAppointment } from '../../../interfaces/appointment.interface'; // Asegúrate de definir esta interfaz si aún no existe
+import { IAppointment, IAppointmentNew } from '../../../interfaces/appointment.interface'; // Asegúrate de definir esta interfaz si aún no existe
 import { IState } from '../../../interfaces/state.interface'; // Asegúrate de definir esta interfaz si aún no existe
 
 @Component({
@@ -23,6 +23,7 @@ export class FormWorkdayComponent implements OnInit {
   appointmentTimes: IAppointmentTime[] = [];
   selectedWorkday?: IWorkday;
   appointmentTimesSelected: IAppointmentTime[] = [];
+  appointmentParaHabilitarLosChecks: IAppointmentTime[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string, // Esto es la fecha del día seleccionado
@@ -79,39 +80,56 @@ export class FormWorkdayComponent implements OnInit {
   }
 
   async createAppointmentForWorkday() {
-    const appointmentTimesNoCoinciden = this.appointmentTimesSelected.filter(
+
+    // Filtrar los appointmentTimes que coinciden // estos estan seleccionados y ya fueron creados
+    const appointmentTimesCoinciden = this.appointmentTimesSelected.filter((apptSelected: any) => 
+      this.selectedWorkday?.appointment.some((appt: any) => appt.appointmentTimes.id === apptSelected.id)
+    );
+
+    const appointmentsParaHabilitar = this.selectedWorkday?.appointment.filter((appt: any) =>  // estos estan seleccionados y ya fueron creados,(estan disabled) hay que habilitarlos
+      this.appointmentTimesSelected.some((apptSelected: any) => appt.appointmentTimes.id === apptSelected.id && appt.state?.name === 'Disabled')
+    );
+
+    const appointmentParaCrear = this.appointmentTimesSelected.filter( //filtra los appointment que no coinciden seran creados
       (apptSelected) =>
         !this.selectedWorkday?.appointment?.some(
           (appt) => appt.appointmentTimes.id === apptSelected.id
         )
     );
 
-    const appointmentsNoCoinciden = this.selectedWorkday?.appointment.filter(
+    const appointmentsParaDeshabilitar = this.selectedWorkday?.appointment.filter( //filtra los appointment que no coinciden seran deshabilitados
       (appt) =>
         !this.appointmentTimesSelected.some(
           (apptSelected) => appt.appointmentTimes.id === apptSelected.id
         )
     );
 
-    if (appointmentTimesNoCoinciden && this.selectedWorkday) {
+    if (appointmentParaCrear && this.selectedWorkday) {
       const state = await this.stateService.getStateByName('Free');
-      let newAppointmentParaCrear: { workdayId: number; appointmentTimeId: number; stateId: number }[] = [];
-      for await (let appointmentsTime of appointmentTimesNoCoinciden) {
+      const newAppointmentParaCrear: IAppointmentNew[] = [];
+      for await (const appointmentsTime of appointmentParaCrear) {
         newAppointmentParaCrear.push({
-          workdayId: this.selectedWorkday.id,
-          appointmentTimeId: appointmentsTime.id,
-          stateId: parseInt(state.id),
+          workday: this.selectedWorkday,
+          appointmentTimes: appointmentsTime,
+          state: state
         });
       }
       await this.appointmentService.createAppointment(newAppointmentParaCrear);
     }
 
-    if (appointmentsNoCoinciden) {
-      const arrayAppointmentsNoCoinciden = appointmentsNoCoinciden.map(
+
+    if (appointmentsParaDeshabilitar) {
+      const arrayAppointmentsParaDeshabilitar = appointmentsParaDeshabilitar.map(
         (appt) => appt.id
       );
-      await this.appointmentService.deleteAppointment(arrayAppointmentsNoCoinciden);
+      await this.appointmentService.disabledAppointment(arrayAppointmentsParaDeshabilitar);
     }
+
+    if (appointmentsParaHabilitar){
+      const state = await this.stateService.getStateByName('Free');
+      await this.appointmentService.changeStatusMany(appointmentsParaHabilitar, state);
+    }
+
   }
 
   cancelarWorkday() {
@@ -120,51 +138,57 @@ export class FormWorkdayComponent implements OnInit {
 
   async initializeSelectedAppointments() {
     if (this.selectedWorkday && this.selectedWorkday.appointment) {
-      this.appointmentTimesSelected = this.selectedWorkday.appointment.map(
-        (appt) => appt.appointmentTimes
-      );
+      this.appointmentTimesSelected = this.selectedWorkday.appointment
+        .filter((appt) => appt.appointmentTimes && appt.state.name === 'Free')
+        .map((appt) => appt.appointmentTimes);
+        this.appointmentParaHabilitarLosChecks = this.selectedWorkday.appointment.map(
+          (appt) => appt.appointmentTimes
+        );
     }
-    console.log("appointmentTimesSelecteddddddddddddddddddddddddd", this.appointmentTimesSelected)
   }
 
   isAppointmentTimeInSchedule(appointment: IAppointmentTime): boolean {
-    console.log("----------------------------------------------------")
-    console.log("appointmentTimesSelected", this.appointmentTimesSelected)
-    console.log("appointment", appointment)
-    if (!this.appointmentTimesSelected.length || !this.selectedWorkday?.appointment) return false;
+    if (!this.appointmentParaHabilitarLosChecks.length || !this.selectedWorkday?.appointment) return false;
     
-    const appointmentTimeQueCoindice = this.appointmentTimesSelected.filter(
+    const appointmentTimeQueCoindice = this.appointmentParaHabilitarLosChecks.filter(
       (appt) => appt.id === appointment.id
     );
 
-    console.log("appointmentTimeQueCoindice", appointmentTimeQueCoindice)
     const appointmentCoincide = this.selectedWorkday.appointment.filter(
       (appt) => appt.appointmentTimes.id === appointment.id
     );
 
-    console.log("appointmentCoincide", appointmentCoincide)
-    if (appointmentCoincide.length && (appointmentCoincide[0].state?.name === "Reserved" || appointmentCoincide[0].state?.name === "Free" || appointmentCoincide[0].state?.name === "finish") && (appointmentTimeQueCoindice.length > 0)) {
-      console.log("retorno truee")
+    if (appointmentCoincide.length && (appointmentCoincide[0].state?.name === "Reserved" || appointmentCoincide[0].state?.name === "Free" || appointmentCoincide[0].state?.name === "finish" || appointmentCoincide[0].state?.name === "defeated") && (appointmentTimeQueCoindice.length > 0)) {
       return true;
     } else {
-      console.log("retorno false")
       return false;
     }
   }
 
   isAppointmentTimeInScheduleDisabled(appointment: IAppointmentTime): boolean {
     if (this.selectedWorkday && this.selectedWorkday.appointment) {
-      const isAppointmentCreate = this.appointmentTimesSelected.some(
+      const isAppointmentCreate = this.appointmentParaHabilitarLosChecks.some(
         (appt) => appt.id === appointment.id
       );
 
-      const isAppointmentStateReserved = this.selectedWorkday.appointment.some(
+      const isAppointmentStateReserved = this.selectedWorkday.appointment.filter(
         (appt) =>
           appt.appointmentTimes.id === appointment.id &&
-          appt.state?.name === 'Reserved'
+          appt.state?.name !== 'Free' && appt.state?.name !== 'Disabled'
       );
 
-      return isAppointmentCreate && isAppointmentStateReserved;
+      console.log("isAppointmentStateReserved", isAppointmentStateReserved)
+      if (isAppointmentStateReserved && isAppointmentStateReserved.length > 0 && isAppointmentStateReserved[0].state && (isAppointmentStateReserved[0].state.name === 'Reserved' || isAppointmentStateReserved[0].state.name === 'finish')) {
+        console.log("entro a reserved")
+        const fila = document.getElementById(appointment.id.toString());
+        fila?.classList.add('table-success');
+      } else if (isAppointmentStateReserved && isAppointmentStateReserved.length > 0 && isAppointmentStateReserved[0].state && isAppointmentStateReserved[0].state.name === 'defeated') {
+        const fila = document.getElementById(appointment.id.toString());  
+        fila?.classList.add('table-danger');
+      }
+
+
+      return isAppointmentCreate && isAppointmentStateReserved.length > 0;
     }
     return false;
   }

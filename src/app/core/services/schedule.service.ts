@@ -3,6 +3,8 @@ import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { backendUrl } from './api-environments';
 import { ModalService } from '../../components/modals/modal.service';
+import { ISchedule } from '../../interfaces/schedule.interface';
+import { IScheduleNew } from '../../interfaces/schedule.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class ScheduleService {
     return null;
   }
 
-  async getSchedules(): Promise<any> {
+  async getSchedules(): Promise<ISchedule[]> {
     try {
       const response = await axios.get(`${backendUrl}/schedule`, {
         headers: {
@@ -40,7 +42,7 @@ export class ScheduleService {
     }
   }
 
-  async createSchedule(data: any): Promise<any> {
+  async createSchedule(data: IScheduleNew): Promise<ISchedule> {
     try {
       const response = await axios.post(`${backendUrl}/schedule`, data, {
         headers: {
@@ -84,7 +86,7 @@ export class ScheduleService {
     }
 }
 
-  async updateSchedule(id: number, schedule: any): Promise<any> {
+  async updateSchedule(id: number, schedule: ISchedule): Promise<ISchedule> {
     try {
       const response = await axios.put(`${backendUrl}/schedule/${id}`, schedule, {
         headers: {

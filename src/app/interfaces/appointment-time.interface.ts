@@ -6,6 +6,9 @@ export interface IAppointmentTime {
   id: number;
   startTime: string;
   endTime: string;
-  schedule: ISchedule[];
-  appointment: IAppointment[];
+}
+
+export interface IAppointmentTimeNew {
+  startTime: string;
+  endTime: string;
 }

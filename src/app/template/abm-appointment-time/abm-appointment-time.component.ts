@@ -4,6 +4,7 @@ import { AppointmentTimeService } from '../../core/services/appointment-time.ser
 import DataTable from 'datatables.net-dt';
 import { ModalService } from '../../components/modals/modal.service';
 import { IAppointmentTime } from '../../interfaces/appointment-time.interface';
+import { IAppointmentTimeNew } from '../../interfaces/appointment-time.interface';
 import { get } from 'jquery';
 
 @Component({

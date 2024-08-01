@@ -3,7 +3,7 @@ import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
 import { backendUrl } from './api-environments';
-import { ApplyScheduleDto } from '../../interfaces/workday/apply-schedule.dto';
+import { IApplySchedule } from '../../interfaces/workday.interface';
 
 
 @Injectable({
@@ -81,7 +81,7 @@ export class WorkdayService {
     }
   }
 
-  async applySchedule(schedule: ApplyScheduleDto): Promise<any> {
+  async applySchedule(schedule: IApplySchedule): Promise<any> {
     try {
       const response = await axios.post(`${backendUrl}/workday/applySchedule`,schedule,{
         headers: {

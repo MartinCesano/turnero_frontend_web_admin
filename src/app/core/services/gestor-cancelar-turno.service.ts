@@ -3,6 +3,7 @@ import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { backendUrl } from './api-environments';
 import { ModalService } from '../../components/modals/modal.service';
+import { ICustomer } from '../../interfaces/customer.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class GestorCancelarTurnoService {
 
 
 
-  async cancelReservation(id: number, customer: any): Promise<any> {
+  async cancelReservation(id: number, customer: ICustomer): Promise<any> {
     try{
         const response = await axios.post(`${backendUrl}/gestor-cancelar-turno/`, {reservation: id, customer: customer});
         console.log(response.data);

@@ -11,3 +11,10 @@ export interface IAppointment {
   reservation?: IReservation;
   state: IState;
 }
+
+export interface IAppointmentNew {
+  appointmentTimes: IAppointmentTime;
+  workday: IWorkday;
+  reservation?: IReservation;
+  state: IState;
+}

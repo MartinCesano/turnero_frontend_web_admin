@@ -5,6 +5,10 @@ import { IWorkday } from './workday.interface';
 export interface ISchedule {
   id: number;
   name: string;
-  workdays?: IWorkday[];
+  appointmentTimes?: IAppointmentTime[];
+}
+
+export interface IScheduleNew {
+  name: string;
   appointmentTimes?: IAppointmentTime[];
 }
