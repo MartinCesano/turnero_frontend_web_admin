@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   workday?: IWorkday;
   table: any;
+  date: Date = new Date();
 
   constructor(
     private modalService: ModalService,
@@ -24,8 +25,7 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.modalService.loading("Cargando Turnos");
     try {
-      const currentDate = new Date().toISOString().split('T')[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
-      this.workday = await this.workdayService.getWorkdayByDate(currentDate);
+      this.workday = await this.workdayService.getWorkdayByDate(this.date.toISOString().split('T')[0]);
 
       this.initializeDataTable();
     } catch (error) {
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     this.modalService.loadingClose();
   }
 
-  //region tabla de turnos
+//region tabla de turnos
   initializeDataTable(): void {
     const tableElement = document.getElementById('appointmentTable') as HTMLTableElement;
     if (tableElement && this.workday?.appointment) {
@@ -46,16 +46,54 @@ export class HomeComponent implements OnInit {
         ordering: true,
         paging: false,
         info: false,
-        data: this.workday.appointment.map((appointment) => [
-          appointment.appointmentTimes?.startTime ?? 'N/A', // Usar el encadenamiento opcional y valor predeterminado
-          appointment.state?.name ?? 'Si estado' // Usar el encadenamiento opcional y valor predeterminado
-        ]),
+        data: this.workday.appointment.map((appointment) => ({
+          id: appointment.id,
+          startTime: appointment.appointmentTimes?.startTime ?? 'N/A',
+          state: appointment.state?.name ?? 'Sin estado'
+        })),
         columns: [
-          { title: "Hora" },
-          { title: "Estado" },
+          { title: "Hora", data: 'startTime' },
+          { title: "Estado", data: 'state' },
         ],
+        createdRow: (row: Node, data: any) => {
+          if (data.state === 'defeated') {
+            (row as HTMLElement).classList.add('table-danger');
+          } else if(data.state === 'Reserved'){
+            (row as HTMLElement).classList.add('table-success');
+          } else if(data.state === 'finish'){
+            (row as HTMLElement).classList.add('table-primary');
+          } else if(data.state === 'Disabled'){
+            (row as HTMLElement).classList.add('table-dark');
+          }
+        }
       });
     }
   }
+
+  async tableRight(){
+    this.modalService.loading("Cargando Turnos");
+    this.date.setDate(this.date.getDate() + 1);
+    try {
+      this.workday = await this.workdayService.getWorkdayByDate(this.date.toISOString().split('T')[0]);
+      this.initializeDataTable();
+    } catch (error) {
+      console.error(error);
+    }
+    this.modalService.loadingClose();
+  }
+
+  async tableLeft(){
+    this.modalService.loading("Cargando Turnos");
+    this.date.setDate(this.date.getDate() - 1);
+    try {
+      this.workday = await this.workdayService.getWorkdayByDate(this.date.toISOString().split('T')[0]);
+      this.initializeDataTable();
+    } catch (error) {
+      console.error(error);
+    }
+    this.modalService.loadingClose();
+  }
   //endregion
+
+
 }

@@ -9,9 +9,14 @@
   <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
     <!-- Administración de Turnos -->
     <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-      <div class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
+      <div class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-center p-6">
         <div>
-          <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">Turnos de Hoy</h6>
+          <h4 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">Turnos de Hoy</h4>          
+        </div>
+        <div class="container m-3 d-flex ">
+          <button (click)="tableLeft()" class="btn btn-primary"><i class="bi bi-arrow-left-circle fs-3"></i></button>
+          <h6 class="text-center"> {{date.toISOString().split('T')[0]}}</h6>
+          <button (click)="tableRight()" class="btn btn-primary"><i class="bi bi-arrow-right-circle fs-3"></i></button>
         </div>
       </div>
       <div class="table-container">
