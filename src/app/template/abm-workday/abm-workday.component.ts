@@ -27,7 +27,7 @@ export class AbmWorkdayComponent implements OnInit {
     'Mayo',
     'Junio',
     'Julio',
-    'Augosto',
+    'Agosto',
     'Septiembre',
     'Octubre',
     'Nobiembre',
