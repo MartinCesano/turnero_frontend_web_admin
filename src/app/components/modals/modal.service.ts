@@ -9,12 +9,14 @@ import { FormScheduleComponent } from './form-schedule/form-schedule.component';
 import { FormWorkdayComponent } from './form-workday/form-workday.component';
 import { FormReservationComponent } from './form-reservation/form-reservation.component';
 import { ApplyScheduleComponent } from './apply-schedule/apply-schedule.component';
+import { ISchedule } from '../../interfaces/schedule.interface';
+import { IReservation } from '../../interfaces/reservation.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-  private scheduleSubject = new Subject<any>(); // Añadir un Subject para schedule
+  private scheduleSubject = new Subject<ISchedule>(); // Añadir un Subject para schedule - Cambie any por la interfaz, puede fallar
   private loadingDialogRef: MatDialogRef<LoadingComponent> | null = null; // Referencia al modal de carga
 
   constructor(private dialog: MatDialog, private router: Router) { }
@@ -81,7 +83,7 @@ export class ModalService {
   //endregion
 
   //region form schedule
-  formSchedule(schedule: any): Promise<any> {
+  formSchedule(schedule: ISchedule): Promise<any> {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(FormScheduleComponent, {
         width: '700px',
@@ -105,12 +107,12 @@ export class ModalService {
   //endregion
 
   //region form workday
-  formWorkday(schedule: any): Promise<any> {
+  formWorkday(date: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(FormWorkdayComponent, {
         width: '700px',
         disableClose: false,
-        data: schedule
+        data: date
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -134,12 +136,12 @@ export class ModalService {
 
 //region formReservation
 
-formReservation(schedule: any): Promise<any> {
+formReservation(reservation: IReservation | null): Promise<any> {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(FormReservationComponent, {
         width: '700px',
         disableClose: false,
-        data: schedule
+        data: reservation
       });
 
       dialogRef.afterClosed().subscribe(result => {

@@ -41,7 +41,7 @@ export class AbmWorkdayComponent implements OnInit {
   currentMonth: number = this.month; //de la pantalla
   currentYear: number = this.year; // de la pantalla
   selectedDay: number | null = null; // de la pantalla
-  selectedDayObject: any = null;
+  selectedDayObject?: IWorkday = undefined;
   selectedDayDate: string = '';
   monthYear: string = ''; // Inicializamos la propiedad
   weeks: (number | null)[][] = []; // Permitir valores null
@@ -67,7 +67,7 @@ export class AbmWorkdayComponent implements OnInit {
 
   @Input() avaibleSchedule: { day: string; id: string }[] | null = null; //dias desabilitados
 
-  workdays: any[] = [];
+  workdays: IWorkday[] = [];
   // #region funciones de inicializacion
   ngOnInit(): void {
     //es lo primero que se ejecuta
@@ -244,13 +244,13 @@ export class AbmWorkdayComponent implements OnInit {
     return false;
   }
 
-  findByDate(date: string): Promise<any> {
+  findByDate(date: string): Promise<IWorkday | undefined> {
     //busca el dia por la fecha
-
+  
     const workday = this.workdays.find(
-      (day) => day.date.split('T')[0] === date
+      (day) => day.date.toISOString().split('T')[0] === date
     );
-    return workday;
+    return Promise.resolve(workday);
   }
 
   // #endregion funciones de logica
