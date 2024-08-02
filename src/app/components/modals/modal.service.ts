@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { LoadingComponent } from './loading/loading.component';
-import { MessageTypesComponent } from './message-types/message-types.component'; 
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-
+import { Subject } from 'rxjs';
+import { LoadingComponent } from './loading/loading.component';
+import { MessageTypesComponent } from './message-types/message-types.component';
+import { FormCustomerComponent } from './form-customer/form-customer.component';
+import { FormScheduleComponent } from './form-schedule/form-schedule.component';
+import { FormWorkdayComponent } from './form-workday/form-workday.component';
+import { FormReservationComponent } from './form-reservation/form-reservation.component';
+import { ApplyScheduleComponent } from './apply-schedule/apply-schedule.component';
+import { ISchedule } from '../../interfaces/schedule.interface';
+import { IReservation } from '../../interfaces/reservation.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
+  private scheduleSubject = new Subject<ISchedule>(); // Añadir un Subject para schedule - Cambie any por la interfaz, puede fallar
+  private loadingDialogRef: MatDialogRef<LoadingComponent> | null = null; // Referencia al modal de carga
 
-  constructor(private dialog: MatDialog,
-    private router: Router,
-
-  ) { }
-
+  constructor(private dialog: MatDialog, private router: Router) { }
 
   //region Modal de Mensajes
   openMenssageTypes(data: any): void {
@@ -25,7 +30,7 @@ export class ModalService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (data.url){
+      if (data.url) {
         this.router.navigateByUrl(data.url)
       }
       // Acciones después de cerrar el modal
@@ -38,21 +43,148 @@ export class ModalService {
     document.body.classList.add('no-scroll'); // Deshabilitar el scroll
 
     // Lógica para abrir el modal de carga
-    const dialogRef = this.dialog.open(LoadingComponent, {
+    this.loadingDialogRef = this.dialog.open(LoadingComponent, {
       width: '700px',
       disableClose: true,
       data: text
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.loadingDialogRef.afterClosed().subscribe(result => {
       document.body.classList.remove('no-scroll'); // Habilitar el scroll nuevamente
       // Acciones después de cerrar el modal
     });
   }
+
   loadingClose(): void {
     document.body.classList.remove('no-scroll'); // Habilitar el scroll nuevamente
-    // Lógica para cerrar el modal de carga
-    this.dialog.closeAll();
+    // Lógica para cerrar solo el modal de carga
+    if (this.loadingDialogRef) {
+      this.loadingDialogRef.close();
+      this.loadingDialogRef = null;
+    }
   }
   //endregion
+
+  //region form customer
+  formCustomer(data: any): void {
+    const dialogRef = this.dialog.open(FormCustomerComponent, {
+      width: '700px',
+      disableClose: false,
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (data.url) {
+        this.router.navigateByUrl(data.url)
+      }
+      // Acciones después de cerrar el modal
+    });
+  }
+  //endregion
+
+  //region form schedule
+  formSchedule(schedule: ISchedule | null): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(FormScheduleComponent, {
+        width: '700px',
+        disableClose: false,
+        data: schedule
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+  //endregion
+
+  //region form workday
+  formWorkday(date: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(FormWorkdayComponent, {
+        width: '700px',
+        disableClose: false,
+        data: date
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+  //endregion
+
+
+
+
+
+//region formReservation
+
+formReservation(reservation: IReservation | null): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(FormReservationComponent, {
+        width: '700px',
+        disableClose: false,
+        data: reservation
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+  //endregion
+
+
+  //region ApplyScheduleComponent
+  applySchedule(schedule: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(ApplyScheduleComponent, {
+        width: '700px',
+        disableClose: false,
+        data: schedule
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
+          resolve(result); // Resolver la promesa con el resultado
+        } else {
+          resolve(null); // Resolver la promesa con null si no hay resultado
+        }
+        // Acciones después de cerrar el modal
+      }, error => {
+        reject(error); // Rechazar la promesa en caso de error
+      });
+    });
+  }
+
+//endregion
+
+
+
 }

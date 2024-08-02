@@ -1,42 +1,61 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core'; // Import the OnInit interface
+import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../../core/services/schedule.service';
-export interface AppointmentTime {
-  id: number;
-  startTime: string;  // Ajusta el tipo según sea necesario, por ejemplo, Date
-}
-
-export interface Schedule {
-  id: number;
-  name: string;
-  appointmentTimes: AppointmentTime[];
-}
-
+import { ModalService } from '../../components/modals/modal.service';
+import { IAppointmentTime } from '../../interfaces/appointment-time.interface';
+import { ISchedule } from '../../interfaces/schedule.interface';
 
 @Component({
   selector: 'app-abm-schedule',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './abm-schedule.component.html',
-  styleUrl: './abm-schedule.component.css'
+  styleUrls: ['./abm-schedule.component.css'] // Asegúrate de usar `styleUrls` en plural
 })
 export class AbmScheduleComponent implements OnInit {
-  // Inicializa como un array vacío
+  
+  schedules: ISchedule[] = []; // Inicializa como un array vacío
+  selectedSchedule?: ISchedule;
 
-  constructor(private scheduleService: ScheduleService) { }
+  constructor(private scheduleService: ScheduleService, private modalService: ModalService) { }
 
-  schedules: any;
   ngOnInit() {
-    console.log('AbmScheduleComponent initialized');
+    this.modalService.loading("Cargando horas")
     this.getSchedules();
   }
 
+
   async getSchedules() {
     try {
-      this.schedules = await this.scheduleService.getSchedules();
-      console.log('Schedules retrieved:', this.schedules);
+      const schedules = await this.scheduleService.getSchedules();
+      // Ordena los appointmentTimes dentro de cada schedule
+      schedules.forEach((schedule: ISchedule) => {
+        // Verifica si appointmentTimes existe y es un array
+        if (schedule.appointmentTimes) {
+          schedule.appointmentTimes.sort((a: IAppointmentTime, b: IAppointmentTime) => a.startTime.localeCompare(b.startTime));
+        }
+      });
+
+      // Ordena los schedules por nombre
+      this.schedules = schedules.sort((a: ISchedule, b: ISchedule) => a.name.localeCompare(b.name));
     } catch (error) {
       console.error('Error fetching schedules:', error);
     }
+    this.modalService.loadingClose();
   }
+
+  async addSchedule(schedule: ISchedule | null) {
+    await this.modalService.formSchedule(schedule);
+    this.getSchedules();
+  }
+
+  async deleteSchedule(schedule: ISchedule) {
+    await this.scheduleService.deleteSchedule(schedule.id)
+    this.getSchedules();
+  }
+
+  async applySchedule(schedule: ISchedule) {
+    this.modalService.applySchedule(schedule);
+  }
+  
 }

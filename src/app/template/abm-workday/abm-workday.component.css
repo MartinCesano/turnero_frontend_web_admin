@@ -53,3 +53,7 @@ button:hover {
     border-collapse: separate;
     border-spacing: 2px 2px; /* 10px de espacio horizontal, 0px de espacio vertical */
   }
+
+  .close{
+    background-color: red;
+  }

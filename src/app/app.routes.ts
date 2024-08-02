@@ -28,10 +28,13 @@ export const routes: Routes = [
         path: 'abm-customers',
         loadComponent: () => import('./template/abm-customers/abm-customers.component').then(m => m.AbmCustomersComponent)
       },
-
+      {
+        path: 'abm-reservation',
+        loadComponent: () => import('./template/abm-reservation/abm-reservation.component').then(m => m.AbmReservationComponent)
+      },
     ],
 
-    //canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },

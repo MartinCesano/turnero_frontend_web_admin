@@ -3,6 +3,7 @@ import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
 import { backendUrl } from './api-environments';
+import { IApplySchedule } from '../../interfaces/workday.interface';
 
 
 @Injectable({
@@ -11,23 +12,68 @@ import { backendUrl } from './api-environments';
 export class WorkdayService {
 
   constructor(private modalService: ModalService) { }
-  getWorkdays(): any {
-    try {
-      return axios.get(`${backendUrl}/workday`);
-    } catch (error) {
-      this.modalService.openMenssageTypes({
-        text: "Error en la obtencion de los dias.",
-        subtitle: (error as any).response.data.message,
-        backendUrl: null,
-        type: "error"
-      })
-      throw new HttpErrorResponse({ error });
+
+
+    // Método para obtener el token almacenado en el localStorage
+    private getAccessToken(): string | null {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const parsedToken = JSON.parse(token);
+        return parsedToken.accessToken || null;
+      }
+      return null;
     }
-  }
-  getWorkdayByDate(date: string): any {
+
+
+    updateWorkday(id: number, workday: any): any {
+      try {
+        return axios.put(`${backendUrl}/workday/${id}`, workday, {
+          headers: { Authorization: `Bearer ${this.getAccessToken()}` }
+        });
+      } catch (error) {
+        this.modalService.loadingClose();
+        this.modalService.openMenssageTypes({
+          text: "Error al actualizar el dia.",
+          subtitle: (error as any).response.data.message,
+          backendUrl: null,
+          type: "error"
+        })
+        throw new HttpErrorResponse({ error });
+      }
+    }
+    
+
+    async getWorkdays(): Promise<any> {
+      try {
+        const response = await axios.get(`${backendUrl}/workday`,{
+          headers: {
+            Authorization: `Bearer ${this.getAccessToken()}`
+          }
+        });
+        return response.data;  // Devuelve solo los datos de la respuesta
+      } catch (error) {
+        this.modalService.loadingClose();
+        this.modalService.openMenssageTypes({
+          text: "Error en la obtencion de los dias.",
+          subtitle: (error as any).response.data.message,
+          backendUrl: null,
+          type: "error"
+        })
+        throw new HttpErrorResponse({ error });
+      }
+    }
+
+    
+  async getWorkdayByDate(date: string): Promise<any> {
     try {
-      return axios.get(`${backendUrl}/workday/${date}`);
+      const response = await axios.get(`${backendUrl}/workday/${date}`,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
+      return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
         subtitle: (error as any).response.data.message,
@@ -37,4 +83,25 @@ export class WorkdayService {
       throw new HttpErrorResponse({ error });
     }
   }
+
+  async applySchedule(schedule: IApplySchedule): Promise<any> {
+    try {
+      const response = await axios.post(`${backendUrl}/workday/applySchedule`,schedule,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
+      return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+      this.modalService.loadingClose();
+      this.modalService.openMenssageTypes({
+        text: "Error en la obtencion de las horas.",
+        subtitle: (error as any).response.data.message,
+        backendUrl: null,
+        type: "error"
+      })
+      throw new HttpErrorResponse({ error });
+    }
+  }
+
 }

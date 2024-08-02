@@ -1,0 +1,28 @@
+<!-- apply-schedule.component.html -->
+<div class="container p-4">
+  <h2 class="mb-4">Aplicar Horarios</h2>
+  <form>
+    <div class="mb-3">
+      <label for="startDate" class="form-label">Desde qué fecha</label>
+      <input type="date" id="startDate" [(ngModel)]="startDate" name="startDate" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="endDate" class="form-label">Hasta qué fecha</label>
+      <input type="date" id="endDate" [(ngModel)]="endDate" name="endDate" class="form-control" required>
+    </div>
+
+    <fieldset class="mb-4">
+      <legend class="form-label">Día de la semana</legend>
+      <div class="d-flex flex-wrap gap-3">
+        <div class="form-check" *ngFor="let day of daysOfWeek">
+          <input type="checkbox" [id]="day" [(ngModel)]="selectedDays[day]" name="applyDays" [value]="day" class="form-check-input">
+          <label [for]="day" class="form-check-label">{{ getDayLabel(day) }}</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <button type="button" (click)="applySchedule()" class="btn btn-primary w-100 mt-3">Aplicar Horario</button>
+    <button type="button" (click)="closeModal()" class="btn btn-secondary w-100 mt-3">Cancelar</button>
+  </form>
+</div>

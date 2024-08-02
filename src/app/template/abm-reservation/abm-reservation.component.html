@@ -1,0 +1,55 @@
+<div class="container m-0 p-0">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1 class="display-6 mb-4">Reservas</h1>
+      </div>
+        <div class="col-lg-6 mb-4 text-lg-end">
+          <button class="btn btn-primary btn-lg" (click)="createReservation()">
+            <i class="bi bi-file-plus"></i> Crear Reserva
+          </button>
+        </div>
+      </div>
+    <div class="row"> 
+      <div class="col-lg-12"> 
+        <div class="table-container" >
+          <table id="customersTable" class="table table-bordered table-hover table-lg display" >
+            <thead class="table-primary text-center">
+              <tr>
+                <th>id</th>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Accion</th>
+              </tr>
+            </thead>
+            <tbody >
+              <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Modal -->
+    
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteModal">Cancelar Reserva</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ¿Está seguro de que desea cancelar la reserva de {{ selectedReservation?.customer?.name || 'desconocido' }}?
+          </div>          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            <button (click)="cancelReservation()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar reserva</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    

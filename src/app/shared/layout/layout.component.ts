@@ -7,11 +7,14 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [ HeaderComponent, FooterComponent, SidebarComponent, RouterOutlet],
+  imports: [HeaderComponent, FooterComponent, SidebarComponent, RouterOutlet],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+  styleUrls: ['./layout.component.css']
 })
-
 export class LayoutComponent {
+  isSidebarOpen: boolean = true;
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 }

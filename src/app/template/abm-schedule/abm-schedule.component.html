@@ -1,24 +1,44 @@
-<div class="container">
+<!-- Contenedor para el título y el botón de crear horario -->
+<div class="row mb-4 mx-3">
+  <div class="col-lg-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Título alineado a la izquierda -->
+      <h1 class="display-6 mb-0">Horarios</h1>
+      <!-- Botón alineado a la derecha con espacio flexible entre el título y el botón -->
+      <button (click)="addSchedule(null)" class="btn btn-primary btn-lg">
+        <i class="bi bi-plus-square"></i> Crear Horario
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor para las tarjetas -->
+<div class="container mb-4">
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="display-6 mb-3">Horarios</h1>
-      <button class="btn btn-primary mb-3">Crear Horario Manualmente</button>
-      <div class="row">
-        <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-items-stretch">
-          <div class="card d-flex flex-column h-100">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title mb-3">{{ schedule.name }}</h5>
-              <div class="row mt-3 overflow-auto">
-                <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="col-6 col-md-4 col-lg-3 mb-2">
-                  <span class="badge bg-secondary text-truncate">{{ appointmentTime.startTime }}</span>
-                </div>
+    <!-- Itera sobre los horarios y crea una tarjeta por cada uno -->
+    <div *ngFor="let schedule of schedules" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <div class="card bg-light shadow-lg d-flex flex-column h-100 border-0">
+        <div class="card-body d-flex flex-column flex-grow-1">
+          <!-- Título de la tarjeta -->
+          <h5 class="card-title mb-3 border-bottom pb-2">{{ schedule.name }}</h5>
+          <!-- Contenedor para las horas de las citas -->
+          <div class="d-flex flex-column mb-3">
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <div *ngFor="let appointmentTime of schedule.appointmentTimes" class="badge bg-primary fs-5 px-3 py-2">
+                {{ appointmentTime.startTime }}
               </div>
             </div>
-            <div class="d-flex justify-content-between p-2 mt-auto">
-              <button class="btn btn-outline-success flex-fill me-2">
+          </div>
+          <!-- Contenedor para los botones -->
+          <div class="mt-auto">
+            <div class="d-grid gap-2">
+              <button (click)="applySchedule(schedule)" class="btn btn-outline-primary">
+                <i class="bi bi-calendar-check"></i> Aplicar
+              </button>
+              <button (click)="addSchedule(schedule)" class="btn btn-outline-success">
                 <i class="bi bi-pencil"></i> Editar
               </button>
-              <button class="btn btn-outline-danger flex-fill">
+              <button (click)="deleteSchedule(schedule)" class="btn btn-outline-danger">
                 <i class="bi bi-trash"></i> Eliminar
               </button>
             </div>
@@ -29,7 +49,7 @@
   </div>
 </div>
 
-
+<!-- Modal para confirmación de eliminación -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -38,7 +58,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete the product:?
+        ¿Está seguro de que desea eliminar el horario?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

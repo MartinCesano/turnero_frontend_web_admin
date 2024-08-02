@@ -30,7 +30,6 @@ export class LoginComponent {
   }
 
   async onSubmit(): Promise<void> {
-    console.log(this.loginForm)
     this.submitted=true
     if (this.loginForm.invalid) {
       return;
@@ -40,7 +39,7 @@ export class LoginComponent {
       this.router.navigate(['/home']);
     } catch (error: any) {
       console.log(error)
-      alert('Error en el inicio de sesión');
+      //alert('Error en el inicio de sesión');
     }
   }
 }

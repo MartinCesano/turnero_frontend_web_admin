@@ -3,6 +3,9 @@ import { backendUrl } from './api-environments';
 import axios from 'axios';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModalService } from '../../components/modals/modal.service';
+import { IAppointmentTime } from '../../interfaces/appointment-time.interface';
+import { IAppointmentTimeNew } from '../../interfaces/appointment-time.interface';
+
 
 
 
@@ -13,11 +16,27 @@ export class AppointmentTimeService {
 
   constructor(private modalService: ModalService) { }
   
-  async getAppointmentTimes(): Promise<any> {
+    // Método para obtener el token almacenado en el localStorage
+    private getAccessToken(): string | null {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const parsedToken = JSON.parse(token);
+        return parsedToken.accessToken || null;
+      }
+      return null;
+    }
+
+
+  async getAppointmentTimes(): Promise<IAppointmentTime[]> {
     try {
-      const response = await axios.get(`${backendUrl}/appointment-time`);
+      const response = await axios.get(`${backendUrl}/appointment-time`, {
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
         subtitle: (error as any).response.data.message,
@@ -28,11 +47,16 @@ export class AppointmentTimeService {
     }
   }
 
-  async createAppointmentTime(appointmentTime: any): Promise<any> {
+  async createAppointmentTime(appointmentTime: IAppointmentTimeNew): Promise<IAppointmentTime> {
     try {
-      const response = await axios.post(`${backendUrl}/appointment-time/`, appointmentTime);
+      const response = await axios.post(`${backendUrl}/appointment-time/`, appointmentTime,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error al crear una hora.",
         subtitle: (error as any).response.data.message,
@@ -43,11 +67,16 @@ export class AppointmentTimeService {
     }
   }
 
-  async updateAppointmentTime(appointmentTime: any): Promise<any> {
+  async updateAppointmentTime(appointmentTime: IAppointmentTime): Promise<IAppointmentTime> {
     try {
-      const response = await axios.put(`${backendUrl}/appointment-time/${appointmentTime.id}`, appointmentTime);
+      const response = await axios.put(`${backendUrl}/appointment-time/${appointmentTime.id}`, appointmentTime,{
+        headers: {
+          Authorization: `Bearer ${this.getAccessToken()}`
+        }
+      });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en actualizar una hora.",
         subtitle: (error as any).response.data.message,
@@ -58,11 +87,18 @@ export class AppointmentTimeService {
     }
   }
 
-  async deleteAppointmentTime(id: number): Promise<any> {
+  async deleteAppointmentTime(id: number): Promise<IAppointmentTime> {
     try {
-      const response = await axios.delete(`${backendUrl}/appointment-time/${id}`);
+      const response = await axios.delete(`${backendUrl}/appointment-time/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.getAccessToken()}`
+          }
+        }
+      );
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error borrar una hora.",
         subtitle: (error as any).response.data.message,
