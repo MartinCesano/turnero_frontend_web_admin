@@ -28,9 +28,9 @@ export class StateService {
           Authorization: `Bearer ${this.getAccessToken()}`
         }
       });
-      console.log(response.data);
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de los horarios.",
         subtitle: (error as any).response.data.message,

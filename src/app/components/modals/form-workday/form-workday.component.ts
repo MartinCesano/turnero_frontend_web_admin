@@ -87,7 +87,7 @@ export class FormWorkdayComponent implements OnInit {
     );
 
     const appointmentsParaHabilitar = this.selectedWorkday?.appointment.filter((appt: any) =>  // estos estan seleccionados y ya fueron creados,(estan disabled) hay que habilitarlos
-      this.appointmentTimesSelected.some((apptSelected: any) => appt.appointmentTimes.id === apptSelected.id && appt.state?.name === 'Disabled')
+      this.appointmentTimesSelected.some((apptSelected: any) => appt.appointmentTimes.id === apptSelected.id && appt.state?.name === 'disabled')
     );
 
     const appointmentParaCrear = this.appointmentTimesSelected.filter( //filtra los appointment que no coinciden seran creados
@@ -105,7 +105,7 @@ export class FormWorkdayComponent implements OnInit {
     );
 
     if (appointmentParaCrear && this.selectedWorkday) {
-      const state = await this.stateService.getStateByName('Free');
+      const state = await this.stateService.getStateByName('free');
       const newAppointmentParaCrear: IAppointmentNew[] = [];
       for await (const appointmentsTime of appointmentParaCrear) {
         newAppointmentParaCrear.push({
@@ -126,7 +126,7 @@ export class FormWorkdayComponent implements OnInit {
     }
 
     if (appointmentsParaHabilitar){
-      const state = await this.stateService.getStateByName('Free');
+      const state = await this.stateService.getStateByName('free');
       await this.appointmentService.changeStatusMany(appointmentsParaHabilitar, state);
     }
 
@@ -139,7 +139,7 @@ export class FormWorkdayComponent implements OnInit {
   async initializeSelectedAppointments() {
     if (this.selectedWorkday && this.selectedWorkday.appointment) {
       this.appointmentTimesSelected = this.selectedWorkday.appointment
-        .filter((appt) => appt.appointmentTimes && appt.state.name === 'Free')
+        .filter((appt) => appt.appointmentTimes && appt.state.name === 'free')
         .map((appt) => appt.appointmentTimes);
         this.appointmentParaHabilitarLosChecks = this.selectedWorkday.appointment.map(
           (appt) => appt.appointmentTimes
@@ -158,7 +158,7 @@ export class FormWorkdayComponent implements OnInit {
       (appt) => appt.appointmentTimes.id === appointment.id
     );
 
-    if (appointmentCoincide.length && (appointmentCoincide[0].state?.name === "Reserved" || appointmentCoincide[0].state?.name === "Free" || appointmentCoincide[0].state?.name === "finish" || appointmentCoincide[0].state?.name === "defeated") && (appointmentTimeQueCoindice.length > 0)) {
+    if (appointmentCoincide.length && (appointmentCoincide[0].state?.name === "reserved" || appointmentCoincide[0].state?.name === "free" || appointmentCoincide[0].state?.name === "finish" || appointmentCoincide[0].state?.name === "defeated") && (appointmentTimeQueCoindice.length > 0)) {
       return true;
     } else {
       return false;
@@ -171,14 +171,15 @@ export class FormWorkdayComponent implements OnInit {
         (appt) => appt.id === appointment.id
       );
 
+      console.log("appointment",appointment)
       const isAppointmentStateReserved = this.selectedWorkday.appointment.filter(
         (appt) =>
           appt.appointmentTimes.id === appointment.id &&
-          appt.state?.name !== 'Free' && appt.state?.name !== 'Disabled'
+          appt.state?.name !== 'free' && appt.state?.name !== 'disabled'
       );
 
-      console.log("isAppointmentStateReserved", isAppointmentStateReserved)
-      if (isAppointmentStateReserved && isAppointmentStateReserved.length > 0 && isAppointmentStateReserved[0].state && (isAppointmentStateReserved[0].state.name === 'Reserved' || isAppointmentStateReserved[0].state.name === 'finish')) {
+      //console.log("isAppointmentStateReserved", isAppointmentStateReserved)
+      if (isAppointmentStateReserved && isAppointmentStateReserved.length > 0 && isAppointmentStateReserved[0].state && (isAppointmentStateReserved[0].state.name === 'reserved' || isAppointmentStateReserved[0].state.name === 'finish')) {
         console.log("entro a reserved")
         const fila = document.getElementById(appointment.id.toString());
         fila?.classList.add('table-success');

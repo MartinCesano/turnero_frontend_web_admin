@@ -31,6 +31,7 @@ export class WorkdayService {
           headers: { Authorization: `Bearer ${this.getAccessToken()}` }
         });
       } catch (error) {
+        this.modalService.loadingClose();
         this.modalService.openMenssageTypes({
           text: "Error al actualizar el dia.",
           subtitle: (error as any).response.data.message,
@@ -51,6 +52,7 @@ export class WorkdayService {
         });
         return response.data;  // Devuelve solo los datos de la respuesta
       } catch (error) {
+        this.modalService.loadingClose();
         this.modalService.openMenssageTypes({
           text: "Error en la obtencion de los dias.",
           subtitle: (error as any).response.data.message,
@@ -71,6 +73,7 @@ export class WorkdayService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
         subtitle: (error as any).response.data.message,
@@ -90,6 +93,7 @@ export class WorkdayService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
         subtitle: (error as any).response.data.message,

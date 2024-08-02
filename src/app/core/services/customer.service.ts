@@ -31,6 +31,7 @@ export class CustomerService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en los clientes.",
         subtitle: (error as any).response.data.message,
@@ -46,6 +47,7 @@ export class CustomerService {
         const response = await axios.post(`${backendUrl}/customer/register`, customer);
         return response.data;
     }catch(error){
+      this.modalService.loadingClose();
         this.modalService.openMenssageTypes({
             text:"Error en el Registro",
             subtitle: (error as any).response.data.message,
@@ -65,6 +67,7 @@ export class CustomerService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en borrar un cliente.",
         subtitle: (error as any).response.data.message,
@@ -86,6 +89,7 @@ export class CustomerService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en editar un cliente.",
         subtitle: (error as any).response.data.message,

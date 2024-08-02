@@ -36,6 +36,7 @@ export class AppointmentTimeService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de las horas.",
         subtitle: (error as any).response.data.message,
@@ -55,6 +56,7 @@ export class AppointmentTimeService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error al crear una hora.",
         subtitle: (error as any).response.data.message,
@@ -74,6 +76,7 @@ export class AppointmentTimeService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en actualizar una hora.",
         subtitle: (error as any).response.data.message,
@@ -95,6 +98,7 @@ export class AppointmentTimeService {
       );
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error borrar una hora.",
         subtitle: (error as any).response.data.message,

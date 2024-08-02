@@ -17,9 +17,9 @@ export class GestorCancelarTurnoService {
   async cancelReservation(id: number, customer: ICustomer): Promise<any> {
     try{
         const response = await axios.post(`${backendUrl}/gestor-cancelar-turno/`, {reservation: id, customer: customer});
-        console.log(response.data);
         return response.data;
     }catch(error){
+        this.modalService.loadingClose();
         let subtitle = null;
         if ((error as any).response && (error as any).response.data && (error as any).response.data.message) {
             subtitle = (error as any).response.data.message;

@@ -34,6 +34,7 @@ async getAppointments(): Promise<IAppointment> {
     });
     return response.data;  // Devuelve solo los datos de la respuesta
   } catch (error) {
+    this.modalService.loadingClose();
     this.modalService.openMenssageTypes({
       text: "Error en la obtencion de los turnos.",
       subtitle: (error as any).response.data.message,
@@ -54,6 +55,7 @@ async createAppointment(appointment: IAppointmentNew[] ): Promise<IAppointment> 
     });
     return response.data;
   } catch (error) {
+    this.modalService.loadingClose();
     this.modalService.openMenssageTypes({
       text: "Error en la agregar el turno.",
       subtitle: (error as any).response.data.message,
@@ -72,6 +74,7 @@ async disabledAppointment(ids: number[]): Promise<IAppointment> {
     });
     return response.data;
   } catch (error) {
+    this.modalService.loadingClose();
     this.modalService.openMenssageTypes({
       text: "Error al eliminar sacar el turno.",
       subtitle: (error as any).response.data.message,
@@ -92,6 +95,7 @@ async changeStatusMany(appointments: IAppointment[], state: IState): Promise<IAp
     });
     return response.data;
   } catch (error) {
+    this.modalService.loadingClose();
     this.modalService.openMenssageTypes({
       text: "Error al cambiar el habilitar turnos.",
       subtitle: (error as any).response.data.message,

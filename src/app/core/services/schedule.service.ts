@@ -32,6 +32,7 @@ export class ScheduleService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la obtencion de los horarios.",
         subtitle: (error as any).response.data.message,
@@ -51,6 +52,7 @@ export class ScheduleService {
       });
       return response.data;
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la creación de un horario.",
         subtitle: (error as any).response.data.message,
@@ -75,6 +77,7 @@ export class ScheduleService {
             type: "success"
         });
     } catch (error) {
+      this.modalService.loadingClose();
         const errorMessage = (error as any).response?.data?.message || "Error desconocido";
         this.modalService.openMenssageTypes({
             text: "Error en la eliminación de un horario.",
@@ -95,6 +98,7 @@ export class ScheduleService {
       });
       return response.data;  // Devuelve solo los datos de la respuesta
     } catch (error) {
+      this.modalService.loadingClose();
       this.modalService.openMenssageTypes({
         text: "Error en la actualizacion de los horarios.",
         subtitle: (error as any).response.data.message,

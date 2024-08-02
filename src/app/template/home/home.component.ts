@@ -58,11 +58,11 @@ export class HomeComponent implements OnInit {
         createdRow: (row: Node, data: any) => {
           if (data.state === 'defeated') {
             (row as HTMLElement).classList.add('table-danger');
-          } else if(data.state === 'Reserved'){
+          } else if(data.state === 'reserved'){
             (row as HTMLElement).classList.add('table-success');
           } else if(data.state === 'finish'){
             (row as HTMLElement).classList.add('table-primary');
-          } else if(data.state === 'Disabled'){
+          } else if(data.state === 'disabled'){
             (row as HTMLElement).classList.add('table-dark');
           }
         }
