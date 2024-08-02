@@ -71,4 +71,8 @@ export class ApplyScheduleComponent implements OnInit {
     };
     return labels[day] || day;
   }
+
+  closeModal(): void {
+    this.dialogRef.close();
+  }
 }

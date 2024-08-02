@@ -83,7 +83,7 @@ export class ModalService {
   //endregion
 
   //region form schedule
-  formSchedule(schedule: ISchedule): Promise<any> {
+  formSchedule(schedule: ISchedule | null): Promise<any> {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(FormScheduleComponent, {
         width: '700px',
