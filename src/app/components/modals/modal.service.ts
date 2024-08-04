@@ -136,22 +136,19 @@ export class ModalService {
 
 //region formReservation
 
-formReservation(reservation: IReservation | null): Promise<any> {
+formReservation(reservation: IReservation | null,date:string | null = null): Promise<any> {
+  document.body.classList.add('no-scroll'); // Deshabilitar el scroll
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(FormReservationComponent, {
         width: '700px',
         disableClose: false,
-        data: reservation
+        data: {reservation: reservation, date:date},
+        
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.scheduleSubject.next(result); // Emitir los datos a través del Subject
-          resolve(result); // Resolver la promesa con el resultado
-        } else {
-          resolve(null); // Resolver la promesa con null si no hay resultado
-        }
         // Acciones después de cerrar el modal
+        document.body.classList.remove('no-scroll'); // Habilitar el scroll nuevamente
       }, error => {
         reject(error); // Rechazar la promesa en caso de error
       });
