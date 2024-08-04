@@ -1,8 +1,37 @@
 <div class="container text-dark p-3">
-    <h1 class="text-center mt-5">Se esta trabajando en esta funcion</h1>
-    
+  <h3 class="text-center mt-2">Reservaciones</h3>
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        Cliente: <input type="text" class="form-control" formControlName="customer" placeholder="Nombre del cliente">
+      </div>
+      <div class="col-md-6 col-sm-12">
+        Documento: <input type="text" class="form-control" formControlName="document" placeholder="Documento del cliente">
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        Fecha: <input type="date" class="form-control" formControlName="date" placeholder="Fecha de la reservación">
+      </div>
+      <div class="col-md-6 col-sm-12">
+        Hora: <input type="time" class="form-control" formControlName="time" placeholder="Hora de la reservación">
+      </div>
+    </div>
+     <div class="row ms-1">Estado de la reserva:</div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <input type="text" class="form-control" formControlName="state" placeholder="Estado de la reserva">
+      </div>
+      <div class="col-md-6 col-sm-12 text-center align-content-center" *ngIf="btnPresent">
+        <button class="btn btn-primary" (click)="changeState()">Se Presento</button>
+      </div>
+      <div class="col-md-6 col-sm-12 text-center" *ngIf="btnAbsent">
+        <button class="btn btn-primary" (click)="changeState()">No se Presento</button>
+      </div>
+    </div>
+  </form>
+  <div class="d-flex justify-content-center">
+      <button class="btn btn-primary m-3" (click)="saveReservation()">Aceptar</button>
   </div>
-  
-  
-  
-  
+</div>
