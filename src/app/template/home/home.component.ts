@@ -5,6 +5,7 @@ import { WorkdayService } from '../../core/services/workday.service';
 import DataTable from 'datatables.net-dt';
 import { IWorkday } from '../../interfaces/workday.interface';
 import { ReservationService } from '../../core/services/reservation.service';
+import { StatusService} from '../../core/bot/status.service';
 
 @Component({
   selector: 'app-home',
@@ -17,14 +18,17 @@ export class HomeComponent implements OnInit {
   workday?: IWorkday;
   table: any;
   date: Date = new Date();
+  qrImageUrl: string = "";
 
   constructor(
     private modalService: ModalService,
     private workdayService: WorkdayService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private statusService: StatusService
   ) { }
 
   async ngOnInit(): Promise<void> {
+        // Inicializa la URL de la imagen si es necesario
     this.modalService.loading("Cargando Turnos");
     try {
       this.workday = await this.workdayService.getWorkdayByDate(this.date.toISOString().split('T')[0]);
@@ -120,5 +124,39 @@ initializeDataTable(): void {
 
   //endregion
 
+
+  //region bot
+  async velidateState(){
+    this.modalService.loading("Validando estado del bot");
+    try{
+      const response = await this.statusService.getStatus()
+      this.modalService.loadingClose();
+      if(response.status === 'connected'){
+        this.modalService.openMenssageTypes({
+          text: "Bot conectado",
+          subtitle: "El bot esta conectado",
+          url: null,
+          type: "success"
+        })
+      }
+      else{
+        this.modalService.openMenssageTypes({
+          text: "Bot desconectado",
+          subtitle: "El bot esta desconectado",
+          url: null,
+          type: "error"
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  updateQRImage(): void {
+    // Actualiza la URL de la imagen del QR code
+    this.qrImageUrl = 'http://localhost:3002/?timestamp=' + new Date().getTime();
+  }
+
+  //endregion
 
 }
